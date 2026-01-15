@@ -1,10 +1,11 @@
-class   Plant:
+class Plant:
     """ A class to represent a plant in the garden """
     def __init__(self, name, height, age):
         """ Initialize a new Plant instance """
         self.name = name
         self.height = height
         self.age = age
+
 
 def main():
     """Initializes the garden registry and displays organized plant data."""
@@ -16,6 +17,7 @@ def main():
     print("=== Garden Plant Registry ===")
     for plant in plants:
         print(f"{plant.name}: {plant.height}cm, {plant.age}days old")
+
 
 if __name__ == "__main__":
     main()

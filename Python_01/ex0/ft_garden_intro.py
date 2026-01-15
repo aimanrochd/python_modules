@@ -7,5 +7,6 @@ def main():
     print(f"Plant: {plant_name}\nHeight: {height}cm\nAge: {age} days\n")
     print("=== End of Program ===")
 
+
 if __name__ == "__main__":
     main()
