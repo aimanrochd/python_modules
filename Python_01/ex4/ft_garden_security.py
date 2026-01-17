@@ -1,13 +1,16 @@
 class SecurePlant:
     def __init__(self, name: str, height: int, age: int):
         self.name = name
-        self._height = height
-        self._age = age
+        print(f"Plant created: {self.name}")
+        self._height = 0
+        self._age = 0
+        self.set_height(height)
+        self.set_age(age)
 
     def get_height(self) -> int:
         return self._height
     
-    def get_age(self) -> None:
+    def get_age(self) -> int:
         return self._age
 
     def set_height(self, value: int) -> None:
@@ -30,13 +33,9 @@ class SecurePlant:
 def main():
     print("=== Garden Security System ===")
     
-    garden_rose = SecurePlant("Rose", 10, 30)
-    print(f"Plant created: {garden_rose.name}")
+    garden_rose = SecurePlant("Rose", 25, 30)
     
-    garden_rose.set_height(2)
-    garden_rose.set_age(2)
-    
-    garden_rose.set_height(55)
+    garden_rose.set_height(-5)
     
     print(f"Current plant: {garden_rose.name} ({garden_rose.get_height()}cm, {garden_rose.get_age()} days)")
 

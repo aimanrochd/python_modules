@@ -16,8 +16,8 @@ def main():
     ]
     print("=== Plant Factory Output ===")
     total = 0
-    for p in plants:
-        print(f"Created: {p.name} ({p.height}cm, {p.age} days)")
+    for plant in plants:
+        print(f"Created: {plant.name} ({plant.height}cm, {plant.age} days)")
         total += 1
     print()
     print(f"Total plants created: {total}")

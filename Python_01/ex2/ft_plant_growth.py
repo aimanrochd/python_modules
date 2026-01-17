@@ -22,32 +22,32 @@ class Plant:
 def main():
     plants = [
         Plant("Rose", 25, 30),
-        Plant("Sunflower", 80, 45)
+        Plant("Sunflower", 80, 45),
+        Plant("Argan", 10, 70)
     ]
     initial_heights = []
     total_plants = 0
     for p in plants:
         initial_heights += [p.height]
         total_plants += 1
-    day = 1
-    print(f"=== Day {day} ===")
-    for plant in plants:
-        plant.get_info()
-    while day < 7:
-        day += 1
-        for plant in plants:
-            plant.grow(1)
-            plant.age_growth()
-    print(f"=== Day {day} ===")
+    print(f"=== Day 1 ===")
     for plant in plants:
         plant.get_info()
     print()
+    for _ in range(6):
+        for plant in plants:
+            plant.grow(1)
+            plant.age_growth()
+    print(f"=== Day 7 ===")
+    for plant in plants:
+        plant.get_info()
+    print()
+    print(f"=== Growth Of Each Plant ===")
     i = 0
-    while i < total_plants:
+    for i in range(total_plants):
         current_plant = plants[i]
         growth = current_plant.height - initial_heights[i]
         print(f"Growth this week For {current_plant.name}: +{growth}cm")
-        i += 1
 
 
 if __name__ == "__main__":
