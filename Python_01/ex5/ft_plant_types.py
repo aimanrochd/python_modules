@@ -1,77 +1,73 @@
-class SecurePlant:
-    def __init__(self, name: str, height: int, age: int):
+class Plant():
+    '''The Base Class That Have The Basic Plant Attributes'''
+    def __init__(self, name, height, age):
         self.name = name
-        self._height = height
-        self._age = age
+        self.height = height
+        self.age = age
+    def get_info(self):
+        print("")
 
-    def get_height(self) -> int:
-        return self._height
-
-    def get_age(self) -> int:
-        return self._age
-
-    def set_height(self, value: int) -> None:
-        if value < 0:
-            print(f"Invalid operation attempted: height {value}cm [REJECTED]")
-            print("Security: Negative height rejected\n")
-        else:
-            self._height = value
-            print(f"Height updated: {value}cm [OK]")
-
-    def set_age(self, value: int) -> None:
-        if value < 0:
-            print(f"Invalid operation attempted: age {value} [REJECTED]")
-            print("Security: Negative age rejected")
-        else:
-            self._age = value
-            print(f"Age updated: {value} days [OK]\n")
-
-    def grow(self):
-        self.set_height(self.get_height() + 1)
-
-
-class Flower(SecurePlant):
-    "It demonstrates Inheritance by allowing"
-    "specialized classes like Flower and Tree"
-    "to reuse the security logic of a Parent class"
-    ", and Polymorphism by allowing each plant type"
-    "to define its own unique growth behavior while"
-    "still following the parent's rules."
+class Flower(Plant):
+    '''The First Derived Class Of Flower Type With Color Attirbute'''
     def __init__(self, name, height, age, color):
         super().__init__(name, height, age)
         self.color = color
-
-    def grow(self):
-        self.set_height(self.get_height() + 2)
-        print(f"{self.name}'s color  is {self.color}")
-
-
-class Tree(SecurePlant):
-    def __init__(self, name, height, age, is_evergreen):
+    def bloom(self):
+        '''A Method To Print 'blooming' '''
+        print(f"{self.name} is blooming beautifully!")
+        
+class Tree(Plant):
+    '''The Second Derived Class Of Tree With trunk_diameter Attribute'''
+    def __init__(self, name, height, age,  trunk_diameter):
         super().__init__(name, height, age)
-        self.is_evergreen = is_evergreen
-
-    def grow(self):
-        self.set_height(self.get_height() + 5)
-
-
-def main():
-    print("=== Garden Specialization System ===")
-
-    # Create the specialized plants
-    sunflower = Flower("Sunflower", 10, 5, "Yellow")
-    pine = Tree("Pine", 50, 20, True)
-
-    # Show they inherited the parent's attributes
-    print(f"Created a {sunflower.color} {sunflower.name}")
-
-    # Test different growth rates
-    sunflower.grow()
-    pine.grow()
-
-    print(f"Sunflower height: {sunflower.get_height()}cm")
-    print(f"Pine height: {pine.get_height()}cm")
-
-
+        self.trunk_diameter = trunk_diameter
+    def produce_shade(self):
+        '''A Method To Calculate And Print The Shade'''
+        shade  = self.height / self.trunk_diameter + 68
+        print(f"{self.name} provides {shade} square meters of shade")
+        
+class Vegetable(Plant):
+    '''The Third Derived Class Of Vegetable Type With nutritional_value & harvest_season Attributes'''
+    def __init__(self, name, height, age, harvest_season, nutritional_value):
+        super().__init__(name, height, age)
+        self.harvest_season = harvest_season
+        self.nutritional_value = nutritional_value
+    def get_info(self):
+        '''A Method To Get nutritional_value Of A Vegetable'''
+        print(f"{self.name} {self.nutritional_value}")
+        
+        
 if __name__ == "__main__":
-    main()
+    print("=== Garden Plant Types ===")
+    print()
+    rose = Flower("Rose", 25, 30, "red")
+    sunflower = Flower("SunFlower", 80, 45, "yellow")
+    
+    oak = Tree("Oak", 500, 1825, 50)
+    pine = Tree("Pine", 400, 1095, 40)
+    
+    tomato = Vegetable("Tomato", 80, 90, "summer", "rich in vitamin C")
+    carrot = Vegetable("Carrot", 30, 75, "autumn", "rich in vitamin D")
+    
+    print(f"{rose.name} (Flower): {rose.height}cm, {rose.age} days, {rose.color} color")
+    rose.bloom()
+    print()
+    
+    print(f"{sunflower.name} (Flower): {sunflower.height}cm, {sunflower.age} days, {sunflower.color} color")
+    sunflower.bloom()
+    print()
+    
+    print(f"{oak.name} (Tree): {oak.height}cm, {oak.age} days, {oak.trunk_diameter}cm diameter")
+    oak.produce_shade()
+    print()
+    
+    print(f"{pine.name} (Tree): {pine.height}cm, {pine.age} days, {pine.trunk_diameter}cm diameter")
+    pine.produce_shade()
+    print()
+    
+    print(f"{tomato.name} (Vegetable): {tomato.height}cm, {tomato.age} days, {tomato.harvest_season} harvest")
+    tomato.get_info()
+    print()
+    
+    print(f"{carrot.name} (Vegetable): {carrot.height}cm, {carrot.age} days, {carrot.harvest_season} harvest")
+    carrot.get_info()
