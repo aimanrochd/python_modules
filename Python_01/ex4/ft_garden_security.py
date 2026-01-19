@@ -29,7 +29,7 @@ class SecurePlant:
             self.__age = value
             print(f"Age updated: {value} days [OK]")
     def get_info(self):
-        print(f"Current plant: {rose.name} ({rose.get_height()}cm, {rose.get_age()} days)")
+        print(f"Current plant: {self.name} ({self.get_height()}cm, {self.get_age()} days)")
 
 
 if __name__ == "__main__":
