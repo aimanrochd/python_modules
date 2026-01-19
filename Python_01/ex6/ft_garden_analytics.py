@@ -4,15 +4,16 @@ class Plant:
         self.name = name
         self._height = height
         self.plant_type = "Regular"
-    
+
     def grow(self, amount):
         """Increases plant height by amount."""
         self._height += amount
         print(f"{self.name} grew {amount}cm")
-    
+
     def get_info(self):
         """Returns basic plant info."""
         return f"{self.name}: {self._height}cm"
+
 
 class FloweringPlant(Plant):
     """Represents a plant that can bloom."""
@@ -21,7 +22,7 @@ class FloweringPlant(Plant):
         self.flower_color = flower_color
         self.is_blooming = False
         self.plant_type = "Flowering"
-    
+
     def bloom(self):
         """Sets the plant to blooming state."""
         self.is_blooming = True
@@ -32,7 +33,9 @@ class FloweringPlant(Plant):
             status = "blooming"
         else:
             status = "not blooming"
-        return f"{self.name}: {self._height}cm, {self.flower_color} flowers ({status})"
+        return f"{self.name}: {self._height}cm, {self.flower_color} "
+        f"flowers ({status})"
+
 
 class PrizeFlower(FloweringPlant):
     """Represents a flower with prize points."""
@@ -40,17 +43,18 @@ class PrizeFlower(FloweringPlant):
         super().__init__(name, height, flower_color)
         self.prize_points = prize_points
         self.plant_type = "Prize"
-    
+
     def get_info(self):
         """Adds prize points to the info string."""
         base_info = super().get_info()
         return f"{base_info}, Prize points: {self.prize_points}"
 
+
 class GardenManager:
     """Manages garden operations and statistics."""
     gardens = {}
     total_gardens = 0
-    
+
     class GardenStats:
         """Helper class for tracking garden statistics."""
         def __init__(self):
@@ -59,7 +63,7 @@ class GardenManager:
             self.regular_plants = 0
             self.flowering_plants = 0
             self.prize_flowers = 0
-        
+
         def update_counts(self, plant):
             """Updates counters based on plant type."""
             self.plants_added += 1
@@ -69,7 +73,7 @@ class GardenManager:
                 self.flowering_plants += 1
             else:
                 self.regular_plants += 1
-        
+
         def get_report(self):
             """Returns a formatted statistics string."""
             return (f"Plants added: {self.plants_added}, "
@@ -84,13 +88,13 @@ class GardenManager:
         self.stats = GardenManager.GardenStats()
         GardenManager.gardens[owner_name] = self
         GardenManager.total_gardens += 1
-    
+
     def add_plant(self, plant):
         """Adds a plant and updates stats."""
         self.plants += [plant]
         self.stats.update_counts(plant)
         print(f"Added {plant.name} to {self.owner_name}'s garden")
-        
+
     def collective_growth(self, amount):
         """Grows all plants in the garden."""
         print(f"{self.owner_name} is helping all plants grow...")
@@ -112,22 +116,22 @@ class GardenManager:
         """Factory method to create multiple gardens."""
         for owner in owners:
             cls(owner)
-    
+
     create_garden_network = classmethod(create_garden_network)
-    
+
     def plant_height_validation(height):
         """Checks if height is valid (positive)."""
         return height >= 0
-    
+
     plant_height_validation = staticmethod(plant_height_validation)
 
 
 if __name__ == "__main__":
     print("=== Garden Management System Demo ===")
-    
+
     # 1. Setup Network
     GardenManager.create_garden_network(["Alice", "Bob"])
-    
+
     # Retrieve instances
     alice = GardenManager.gardens["Alice"]
     bob = GardenManager.gardens["Bob"]
@@ -141,15 +145,15 @@ if __name__ == "__main__":
     oak = Plant("Oak Tree", 100)
     rose = FloweringPlant("Rose", 25, "red")
     sunflower = PrizeFlower("Sunflower", 50, "yellow", 10)
-    
+
     alice.add_plant(oak)
     alice.add_plant(rose)
     alice.add_plant(sunflower)
-    
+
     print()
     # 4. Action Phase
     alice.collective_growth(1)
-    
+
     rose.bloom()
     sunflower.bloom()
 
@@ -159,14 +163,16 @@ if __name__ == "__main__":
     print("Plants in garden:")
     for plant in alice.plants:
         print(f"- {plant.get_info()}")
-    
+
     print()
     print(alice.stats.get_report())
     print()
-    
-    print(f"Height validation test: {GardenManager.plant_height_validation(10)}")
-    
+
+    print(f"Height validation test: "
+          f"{GardenManager.plant_height_validation(10)}")
+
     # 6. Scores Line (Direct Print - No Loop)
-    print(f"Garden scores - {alice.owner_name}: {alice.calculate_score()}, {bob.owner_name}: {bob.calculate_score()}")
-    
+    print(f"Garden scores - {alice.owner_name}: {alice.calculate_score()}, "
+          f"{bob.owner_name}: {bob.calculate_score()}")
+
     print(f"Total gardens managed: {GardenManager.total_gardens}")

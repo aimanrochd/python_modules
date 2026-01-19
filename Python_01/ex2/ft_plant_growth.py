@@ -30,7 +30,7 @@ def main():
     for p in plants:
         initial_heights += [p.height]
         total_plants += 1
-    print(f"=== Day 1 ===")
+    print("=== Day 1 ===")
     for plant in plants:
         plant.get_info()
     print()
@@ -38,11 +38,11 @@ def main():
         for plant in plants:
             plant.grow(1)
             plant.age_growth()
-    print(f"=== Day 7 ===")
+    print("=== Day 7 ===")
     for plant in plants:
         plant.get_info()
     print()
-    print(f"=== Growth Of Each Plant ===")
+    print("=== Growth Of Each Plant ===")
     i = 0
     for i in range(total_plants):
         current_plant = plants[i]

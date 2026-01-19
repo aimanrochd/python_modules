@@ -9,7 +9,7 @@ class SecurePlant:
 
     def get_height(self) -> int:
         return self.__height
-    
+
     def get_age(self) -> int:
         return self.__age
 
@@ -28,8 +28,10 @@ class SecurePlant:
         else:
             self.__age = value
             print(f"Age updated: {value} days [OK]")
+
     def get_info(self):
-        print(f"Current plant: {self.name} ({self.get_height()}cm, {self.get_age()} days)")
+        print(f"Current plant: {self.name} ({self.get_height()}cm, "
+              f"{self.get_age()} days)")
 
 
 if __name__ == "__main__":
@@ -38,5 +40,5 @@ if __name__ == "__main__":
     print()
     rose.set_age(-5)
     print()
-    
+
     rose.get_info()
