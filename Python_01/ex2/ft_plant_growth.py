@@ -10,7 +10,7 @@ class Plant:
         """Increase the height of the plant by the specified amount."""
         self.height += amount
 
-    def age_growth(self) -> None:
+    def age_grow(self) -> None:
         """this method increase the age of a plant by 1 day"""
         self.age += 1
 

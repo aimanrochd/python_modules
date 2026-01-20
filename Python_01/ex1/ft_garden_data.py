@@ -7,8 +7,7 @@ class Plant:
         self.age = age
 
 
-def main():
-    """Initializes the garden registry and displays organized plant data."""
+if __name__ == "__main__":
     plants = [
         Plant("Rose", 25, 30),
         Plant("Sunflower", 80, 45),
@@ -17,7 +16,3 @@ def main():
     print("=== Garden Plant Registry ===")
     for plant in plants:
         print(f"{plant.name}: {plant.height}cm, {plant.age}days old")
-
-
-if __name__ == "__main__":
-    main()

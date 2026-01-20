@@ -36,9 +36,9 @@ class SecurePlant:
 
 if __name__ == "__main__":
     print("=== Garden Security System ===")
+
     rose = SecurePlant("Rose", 25, 30)
     print()
-    rose.set_age(-5)
+    rose.set_height(-5)  
     print()
-
     rose.get_info()
