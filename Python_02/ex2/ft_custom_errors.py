@@ -1,5 +1,3 @@
-# ==================== Custom Exception Classes ====================
-
 class GardenError(Exception):
     """Base class for garden-related errors"""
     pass
@@ -32,33 +30,33 @@ def check_water(tank_level: int):
 def test_custom_errors():
     """Demonstrate custom exception types"""
     print("=== Custom Garden Errors Demo ===\n")
-    
+
     print("Testing PlantError...")
     try:
         check_plant("tomato")
     except PlantError as e:
         print(f"Caught PlantError: {e}")
     print()
-    
+
     print("Testing WaterError...")
     try:
         check_water(10)
     except WaterError as e:
         print(f"Caught WaterError: {e}")
     print()
-    
+
     print("Testing catching all garden errors...")
     try:
         check_plant("tomato")
     except GardenError as e:
         print(f"Caught a garden error: {e}")
-    
+
     try:
         check_water(5)
     except GardenError as e:
         print(f"Caught a garden error: {e}")
     print()
-    
+
     print("All custom error types work correctly!")
 
 

@@ -15,7 +15,11 @@ class GardenManager:
         self.plants = {}
         self.water_tank = 100
 
-    def add_plant(self, plant_name: str, water_need: int = 5, sun_need: int  = 8):
+    def add_plant(
+            self,
+            plant_name: str,
+            water_need: int = 5,
+            sun_need: int = 8):
         if not plant_name:
             raise PlantError("Plant name cannot be empty!")
 
@@ -50,12 +54,16 @@ class GardenManager:
         if plant_name not in self.plants:
             raise PlantError(f"Plant '{plant_name}' not found in garden!")
 
-        plant  = self.plants[plant_name]
+        plant = self.plants[plant_name]
         water = plant['water']
         sun = plant['sun']
 
         if water < 1:
             raise PlantError(f"Water level {water} is too low (min 1)")
+        if water > 10:
+            raise PlantError(f"Water level {water} is too high (max 10)")
+        if sun < 2:
+            raise PlantError(f"Sunlight hours {sun} is too low (min 2)")
         if sun > 12:
             raise PlantError(f"Sunlight hours {sun} is too high (max 12)")
 
@@ -64,7 +72,7 @@ class GardenManager:
 
 def test_garden_management():
     print("=== Garden Management System ===\n")
-    
+
     garden = GardenManager()
 
     print("Adding plants to garden...")
@@ -76,7 +84,7 @@ def test_garden_management():
     try:
         garden.add_plant("lettuce", 15, 6)
     except PlantError as e:
-        print (f"Error adding plant: {e}")
+        print(f"Error adding plant: {e}")
 
     try:
         garden.add_plant("", 5, 8)
@@ -96,7 +104,7 @@ def test_garden_management():
         garden.check_plant_health("tomato")
     except PlantError as e:
         print(f"Error checking tomato: {e}")
-    
+
     try:
         garden.check_plant_health("lettuce")
     except PlantError as e:

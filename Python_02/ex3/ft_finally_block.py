@@ -1,4 +1,4 @@
-def  water_plants(plant_list: list):
+def water_plants(plant_list: list):
     print("Opening watering system")
 
     try:
@@ -15,7 +15,7 @@ def  water_plants(plant_list: list):
 
 def test_watering_system():
     """Demonstrate finally block with both success and error cases"""
-    
+
     print("=== Garden Watering System ===\n")
 
     print("Testing normal watering...")
