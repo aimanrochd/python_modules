@@ -39,6 +39,6 @@ if __name__ == "__main__":
 
     rose = SecurePlant("Rose", 25, 30)
     print()
-    rose.set_height(-5)  
+    rose.set_height(-5)
     print()
     rose.get_info()
