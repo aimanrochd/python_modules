@@ -1,12 +1,13 @@
 class Plant:
     """Blueprint for a garden plant."""
-    def __init__(self, name: str, height: int, age: int):
+    def __init__(self, name: str, height: int, age: int) -> None:
+        """Initializes the plant with a name, height and age"""
         self.name = name
         self.height = height
         self.age = age
 
 
-def main():
+if __name__ == "__main__":
     plants = [
         Plant("Rose", 25, 30),
         Plant("Oak", 200, 365),
@@ -21,7 +22,3 @@ def main():
         total += 1
     print()
     print(f"Total plants created: {total}")
-
-
-if __name__ == "__main__":
-    main()

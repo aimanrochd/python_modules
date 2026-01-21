@@ -1,6 +1,6 @@
 class Plant:
     """ A class to represent a plant in the garden """
-    def __init__(self, name, height, age):
+    def __init__(self, name: str, height: int, age: int) -> None:
         """ Initialize a new Plant instance """
         self.name = name
         self.height = height
@@ -19,11 +19,10 @@ class Plant:
         print(f"{self.name}: {self.height}cm, {self.age} days old")
 
 
-def main():
+if __name__ == "__main__":
     plants = [
         Plant("Rose", 25, 30),
-        Plant("Sunflower", 80, 45),
-        Plant("Argan", 10, 70)
+        Plant("Sunflower", 80, 45)
     ]
     initial_heights = []
     total_plants = 0
@@ -37,7 +36,7 @@ def main():
     for _ in range(6):
         for plant in plants:
             plant.grow(1)
-            plant.age_growth()
+            plant.age_grow()
     print("=== Day 7 ===")
     for plant in plants:
         plant.get_info()
@@ -48,7 +47,3 @@ def main():
         current_plant = plants[i]
         growth = current_plant.height - initial_heights[i]
         print(f"Growth this week For {current_plant.name}: +{growth}cm")
-
-
-if __name__ == "__main__":
-    main()
