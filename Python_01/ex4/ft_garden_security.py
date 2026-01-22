@@ -5,18 +5,18 @@ class SecurePlant:
         """Initializes the plant with a name, height and age"""
         self.name = name
         print(f"Plant created: {self.name}")
-        self.__height = 0
-        self.__age = 0
+        self._height = 0
+        self._age = 0
         self.set_height(height)
         self.set_age(age)
 
     def get_height(self) -> int:
         """a method to get the height"""
-        return self.__height
+        return self._height
 
     def get_age(self) -> int:
         """a method to get the age"""
-        return self.__age
+        return self._age
 
     def set_height(self, value: int) -> None:
         """a method to set the height with some conditions"""
@@ -24,7 +24,7 @@ class SecurePlant:
             print(f"Invalid operation attempted: height {value}cm [REJECTED]")
             print("Security: Negative height rejected")
         else:
-            self.__height = value
+            self._height = value
             print(f"Height updated: {value}cm [OK]")
 
     def set_age(self, value: int) -> None:
@@ -34,7 +34,7 @@ class SecurePlant:
             print(f"Invalid operation attempted: age {value} days [REJECTED]")
             print("Security: Negative age rejected")
         else:
-            self.__age = value
+            self._age = value
             print(f"Age updated: {value} days [OK]")
 
     def get_info(self) -> None:
