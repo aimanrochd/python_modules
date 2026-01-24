@@ -15,4 +15,4 @@ if __name__ == "__main__":
     ]
     print("=== Garden Plant Registry ===")
     for plant in plants:
-        print(f"{plant.name}: {plant.height}cm, {plant.age}days old")
+        print(f"{plant.name}: {plant.height}cm, {plant.age} days old")

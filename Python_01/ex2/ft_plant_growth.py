@@ -4,19 +4,19 @@ class Plant:
         """ Initialize a new Plant instance """
         self.name = name
         self.height = height
-        self.age = age
+        self.plant_age = age
 
     def grow(self, amount: int) -> None:
         """Increase the height of the plant by the specified amount."""
         self.height += amount
 
-    def age_grow(self) -> None:
+    def age(self) -> None:
         """this method increase the age of a plant by 1 day"""
-        self.age += 1
+        self.plant_age += 1
 
     def get_info(self) -> None:
         """this method give us information about the current plant status"""
-        print(f"{self.name}: {self.height}cm, {self.age} days old")
+        print(f"{self.name}: {self.height}cm, {self.plant_age} days old")
 
 
 if __name__ == "__main__":
@@ -36,7 +36,7 @@ if __name__ == "__main__":
     for _ in range(6):
         for plant in plants:
             plant.grow(1)
-            plant.age_grow()
+            plant.age()
     print("=== Day 7 ===")
     for plant in plants:
         plant.get_info()
