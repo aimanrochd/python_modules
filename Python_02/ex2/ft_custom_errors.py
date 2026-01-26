@@ -1,63 +1,53 @@
 class GardenError(Exception):
-    """Base class for garden-related errors"""
+    """Base exception for garden-related problems"""
     pass
 
 
 class PlantError(GardenError):
-    """Exception for plant-related problems"""
+    """Exception for plant-specific problems"""
     pass
 
 
 class WaterError(GardenError):
-    """Exception for water-related problems"""
+    """Exception for watering-related problems"""
     pass
 
 
-def check_plant(plant_name: str):
-    """Check plant health - raises PlantError if plant is wilting"""
-    if plant_name == "tomato":
-        raise PlantError("The tomato plant is wilting!")
-    print(f"{plant_name} is healthy!")
+def test_plant_error() -> None:
+    """Raises a PlantError"""
+    raise PlantError("The tomato plant is wilting!")
 
 
-def check_water(tank_level: int):
-    """Check water tank - raises WaterError if low"""
-    if tank_level < 20:
-        raise WaterError("Not enough water in the tank!")
-    print(f"Water tank level: {tank_level}%")
+def test_water_error() -> None:
+    """Raises a WaterError"""
+    raise WaterError("Not enough water in the tank!")
 
 
-def test_custom_errors():
-    """Demonstrate custom exception types"""
-    print("=== Custom Garden Errors Demo ===\n")
-
-    print("Testing PlantError...")
+def test_custom_errors() -> None:
     try:
-        check_plant("tomato")
-    except PlantError as e:
-        print(f"Caught PlantError: {e}")
-    print()
-
-    print("Testing WaterError...")
-    try:
-        check_water(10)
-    except WaterError as e:
-        print(f"Caught WaterError: {e}")
-    print()
-
-    print("Testing catching all garden errors...")
-    try:
-        check_plant("tomato")
-    except GardenError as e:
-        print(f"Caught a garden error: {e}")
-
-    try:
-        check_water(5)
-    except GardenError as e:
-        print(f"Caught a garden error: {e}")
-    print()
-
-    print("All custom error types work correctly!")
+        print("=== Custom Garden Errors Demo ===\n")
+        try:
+            print("Testing PlantError...")
+            test_plant_error()
+        except PlantError as e:
+            print(f"Caught PlantError: {e}\n")
+        try:
+            print("Testing WaterError...")
+            test_water_error()
+        except WaterError as e:
+            print(f"Caught WaterError: {e}\n")
+        print("Testing catching all garden errors...")
+        try:
+            test_plant_error()
+        except GardenError as e:
+            print(f"Caught a garden error: {e}")
+        try:
+            test_water_error()
+        except GardenError as e:
+            print(f"Caught a garden error: {e}\n")
+        print("All custom error types work correctly!")
+    except Exception as e:
+        print(f"Error: {e}")
 
 
 if __name__ == "__main__":
