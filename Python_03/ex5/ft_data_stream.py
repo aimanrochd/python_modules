@@ -1,10 +1,8 @@
 def stream_game_events(n_events: int):
     """
-    Generator that creates game events on demand.
-    Uses yield to save memory.
-    """
+    Generator that creates game events on demand uses yield to save memory."""
     names = ["alice", "bob", "charlie", "diana", "eve"]
-    actions = ["killed monster", "found treasure", "leveled up", "joined guild"]
+    actions = ["killed monster", "found treasure", "leveled up"]
     
     for i in range(1, n_events + 1):
         name = names[i % len(names)]
@@ -27,10 +25,12 @@ def prime_generator(n):
     num = 2
     while count < n:
         is_prime = True
-        for i in range(2, int(num ** 0.5) + 1):
+        i = 2
+        while i * i <= num:
             if num % i == 0:
                 is_prime = False
                 break
+            i += 1
         
         if is_prime:
             yield num
@@ -85,7 +85,7 @@ def main():
     
     print("\n=== Generator Demonstration ===")
     
-    print("Fibonacci sequence (first 10):", end=" ")
+    print("Fibonacci sequence (first 10): ", end="")
     print(*fibonacci_generator(10), sep=", ")
     
     print("Prime numbers (first 5):", end=" ")
