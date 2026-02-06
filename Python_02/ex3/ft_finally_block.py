@@ -1,7 +1,4 @@
 def water_plants(plant_list: list) -> None:
-    """
-    Waters plants from the list and ensures cleanup happens
-    """
     try:
         print("Opening watering system")
 
@@ -18,7 +15,6 @@ def water_plants(plant_list: list) -> None:
 
 
 def test_watering_system() -> None:
-    """Demonstrates finally block with normal and error cases"""
     try:
         print("=== Garden Watering System ===\n")
 
@@ -31,6 +27,8 @@ def test_watering_system() -> None:
         print("\nCleanup always happens, even with errors!")
     except Exception as e:
         print(f"Error: {e}")
+    finally:
+        print("\nAll tests finished.")
 
 
 if __name__ == "__main__":

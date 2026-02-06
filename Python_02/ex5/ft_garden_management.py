@@ -15,21 +15,21 @@ class WaterError(GardenError):
 
 class GardenManager:
     """Manages garden operations with error handling"""
-    
-    def __init__(self):
+
+    def __init__(self) -> None:
         """Initialize garden manager"""
         self.plants = []
-    
+
     def add_plant(self, plant_name: str) -> None:
         """Add a plant to the garden"""
         try:
             if plant_name == "":
                 raise PlantError("Plant name cannot be empty!")
-            self.plants.append(plant_name)
+            self.plants += [plant_name]
             print(f"Added {plant_name} successfully")
         except PlantError as e:
             print(f"Error adding plant: {e}")
-    
+
     def water_plants(self) -> None:
         """Water all plants in the garden"""
         try:
@@ -42,8 +42,9 @@ class GardenManager:
             print(f"Error: {e}")
         finally:
             print("Closing watering system (cleanup)")
-    
-    def check_plant_health(self, plant_name: str, water: int, sun: int) -> None:
+
+    def check_plant_health(self, plant_name: str,
+                           water: int, sun: int) -> None:
         """Check if plant health parameters are valid"""
         try:
             if water < 1:
@@ -58,7 +59,7 @@ class GardenManager:
                 print(f"{plant_name}: healthy (water: {water}, sun: {sun})")
         except (WaterError, ValueError) as e:
             print(f"Error checking {plant_name}: {e}")
-    
+
     def test_recovery(self) -> None:
         """Test error recovery"""
         try:
@@ -69,30 +70,29 @@ class GardenManager:
 
 
 def test_garden_management() -> None:
-    """Test the garden management system"""
     print("=== Garden Management System ===\n")
-    
+
     garden_manager = GardenManager()
-    
+
     print("Adding plants to garden...")
     garden_manager.add_plant("tomato")
     garden_manager.add_plant("lettuce")
     garden_manager.add_plant("")
     print()
-    
+
     print("Watering plants...")
     garden_manager.water_plants()
     print()
-    
+
     print("Checking plant health...")
     garden_manager.check_plant_health("tomato", 5, 8)
     garden_manager.check_plant_health("lettuce", 15, 8)
     print()
-    
+
     print("Testing error recovery...")
     garden_manager.test_recovery()
     print()
-    
+
     print("Garden management system test complete!")
 
 

@@ -24,31 +24,31 @@ def test_water_error() -> None:
 
 
 def test_custom_errors() -> None:
+    print("=== Custom Garden Errors Demo ===\n")
     try:
-        print("=== Custom Garden Errors Demo ===\n")
-        try:
-            print("Testing PlantError...")
-            test_plant_error()
-        except PlantError as e:
-            print(f"Caught PlantError: {e}\n")
-        try:
-            print("Testing WaterError...")
-            test_water_error()
-        except WaterError as e:
-            print(f"Caught WaterError: {e}\n")
-        print("Testing catching all garden errors...")
-        try:
-            test_plant_error()
-        except GardenError as e:
-            print(f"Caught a garden error: {e}")
-        try:
-            test_water_error()
-        except GardenError as e:
-            print(f"Caught a garden error: {e}\n")
-        print("All custom error types work correctly!")
-    except Exception as e:
-        print(f"Error: {e}")
+        print("Testing PlantError...")
+        test_plant_error()
+    except PlantError as e:
+        print(f"Caught PlantError: {e}\n")
+    try:
+        print("Testing WaterError...")
+        test_water_error()
+    except WaterError as e:
+        print(f"Caught WaterError: {e}\n")
+    print("Testing catching all garden errors...")
+    try:
+        test_plant_error()
+    except GardenError as e:
+        print(f"Caught a garden error: {e}")
+    try:
+        test_water_error()
+    except GardenError as e:
+        print(f"Caught a garden error: {e}\n")
+    print("All custom error types work correctly!")
 
 
 if __name__ == "__main__":
-    test_custom_errors()
+    try:
+        test_custom_errors()
+    except Exception as e:
+        print(f"Error: {e}")
