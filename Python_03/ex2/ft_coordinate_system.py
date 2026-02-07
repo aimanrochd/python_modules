@@ -1,33 +1,33 @@
 import math
+# import sys
 
 
 def create_position(coordinates: tuple) -> tuple:
-    """"""
-    x, y, z = coordinates
-    if x or y or z != 0:
-        print(f"Position created: {coordinates}")
+    print(f"Position created: {coordinates}")
     return coordinates
 
 
 def distance_calculator(pos: tuple) -> float:
-    """"""
-    coordinates: tuple = 0, 0, 0
-    base_pos = create_position(coordinates)
-    distance = math.sqrt((pos[0] - base_pos[0])**2 +
-                         (pos[1] - base_pos[1])**2 + (pos[2] - base_pos[2])**2)
+
+    base_x, base_y, base_z = 0, 0, 0
+    pos_x, pos_y, pos_z = pos
+
+    distance = math.sqrt(
+        (pos_x - base_x)**2 +
+        (pos_y - base_y)**2 +
+        (pos_z - base_z)**2
+    )
     print(f"Distance between (0, 0, 0) and {pos}: ", end="")
     return distance
 
 
-def parsing(coordinates: str):
-    """"""
+def parsing(coordinates: str) -> tuple | None:
     try:
-        str_coordinates_list = coordinates.split(',')
-        int_coordinates_list = []
-        for i in str_coordinates_list:
-            int_coordinates_list += [int(i.strip())]
+        parts = coordinates.split(',')
 
-        parsed_position = tuple(int_coordinates_list)
+        p1, p2, p3 = parts
+
+        parsed_position = (int(p1), int(p2), int(p3))
 
         print(f"Parsing coordinates: \"{coordinates}\"")
         print(f"Parsed position: {parsed_position}")
@@ -36,32 +36,37 @@ def parsing(coordinates: str):
     except ValueError as e:
         print(f"Parsing invalid coordinates: \"{coordinates}\"")
         print(f"Error parsing coordinates: {e}")
-        print(f'Error details - Type: {type(e).__name__}, Args: ("{e}",)\n')
+        print(f"Error details Type: {type(e).__name__}, Args: {e.args}")
         return None
 
 
-def unpacking_dem(position: tuple):
-    """"""
+def unpacking_dem(position: tuple) -> None:
     print("Unpacking demonstration:")
-    x, y, z = position
-    print(f"Player at x={x}, y={y}, z={z}")
-    print(f"Coordinates: X={position[0]}, Y={position[1]}, Z={position[2]}")
+    try:
+        x, y, z = position
+        print(f"Player at x={x}, y={y}, z={z}")
+        print(f"Coordinates: X={x}, Y={y}, Z={z}")
+    except ValueError:
+        print("Error: Position does not contain exactly 3 coordinates.")
 
 
 if __name__ == "__main__":
     print("=== Game Coordinate System ===\n")
 
-    invalid_input = "abc,def,ghi"
-    coordinates: tuple = 10, 20, 5
+    coordinates = (10, 20, 5)
     pos = create_position(coordinates)
 
     distance = distance_calculator(pos)
     print(f"{distance:.2f}\n")
 
     parsed_position = parsing("3,4,0")
-    distance_2 = distance_calculator(parsed_position)
-    print(f"{distance_2:.1f}\n")
+    if parsed_position:
+        distance_2 = distance_calculator(parsed_position)
+        print(f"{distance_2:.1f}\n")
 
-    parsing(invalid_input)
+        unpacking_dem(parsed_position)
 
-    unpacking_dem(parsed_position)
+    parsing("abc,def,ghi")
+
+    print("\n--- Testing Dimension Error (Unpacking Check) ---")
+    parsing("1,2")

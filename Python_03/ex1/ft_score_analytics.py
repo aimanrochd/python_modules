@@ -1,29 +1,36 @@
 import sys
 
 
-def ft_score_analytics():
+def ft_score_analytics() -> None:
     if len(sys.argv) > 1:
         scores = []
         try:
-            for i in sys.argv:
-                if i is sys.argv[0]:
-                    continue
-                scores += [int(i)]
+            for arg in sys.argv[1:]:
+                scores += [int(arg)]
         except ValueError:
-            print("Error: You're Passing Non-Numeric Values")
+            print("Error: Non-numeric value found. "
+                  "Please provide integers only.")
+            return
+        if not scores:
+            print("Error: No valid scores to process.")
+            return
         print(f"Scores processed: {scores}")
+
         total_players = len(scores)
-        print(f"Total players: {total_players}")
         total_scores = sum(scores)
+
+        print(f"Total players: {total_players}")
         print(f"Total score: {total_scores}")
-        average = sum(scores) / total_players
-        print(f"Average score: {average}")
+
+        average = total_scores / total_players
         high_score = max(scores)
-        print(f"High score: {high_score}")
         low_score = min(scores)
+        score_range = high_score - low_score
+
+        print(f"Average score: {average}")
+        print(f"High score: {high_score}")
         print(f"Low score: {low_score}")
-        range = high_score - low_score
-        print(f"Score range: {range}")
+        print(f"Score range: {score_range}")
     else:
         print("No scores provided. Usage: python3 ft_score_analytics.py"
               " <score1> <score2> ...")

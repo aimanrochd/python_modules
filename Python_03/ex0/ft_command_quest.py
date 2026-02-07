@@ -1,18 +1,14 @@
+# CODE DONE
 import sys
 
 
-def ft_command_quest():
+def ft_command_quest() -> None:
     program_name = sys.argv[0]
     args_nbr = len(sys.argv)
-    arguments = []
-    i = 1
-    for i in sys.argv:
-        if i == sys.argv[0]:
-            continue
-        arguments += [i]
+    arguments = sys.argv[1:]
 
     print("=== Command Quest ===")
-    if args_nbr <= 1:
+    if args_nbr == 1:
         print("No arguments provided!")
         print(f"Program name: {program_name}")
         print(f"Total arguments: {args_nbr}")
@@ -24,7 +20,7 @@ def ft_command_quest():
         for arg in arguments:
             print(f"Argument {i}: {arg}")
             i += 1
-        print(f"Total arguments:{args_nbr}")
+        print(f"Total arguments: {args_nbr}")
 
 
 if __name__ == "__main__":
