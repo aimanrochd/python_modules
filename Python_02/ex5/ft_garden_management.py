@@ -97,4 +97,7 @@ def test_garden_management() -> None:
 
 
 if __name__ == "__main__":
-    test_garden_management()
+    try:
+        test_garden_management()
+    except Exception as e:
+        print(f"Error: {e}")

@@ -14,12 +14,10 @@ class WaterError(GardenError):
 
 
 def test_plant_error() -> None:
-    """Raises a PlantError"""
     raise PlantError("The tomato plant is wilting!")
 
 
 def test_water_error() -> None:
-    """Raises a WaterError"""
     raise WaterError("Not enough water in the tank!")
 
 
