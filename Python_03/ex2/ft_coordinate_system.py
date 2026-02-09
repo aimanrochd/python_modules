@@ -1,6 +1,4 @@
-# NOT READY IT STILL HAS SOME ERRORS (FLOATING POINTS IN THE COORDINATES ......)
 import math
-# import sys
 
 
 def create_position(coordinates: tuple) -> tuple:
@@ -51,7 +49,7 @@ def unpacking_dem(position: tuple) -> None:
         print("Error: Position does not contain exactly 3 coordinates.")
 
 
-if __name__ == "__main__":
+def main() -> None:
     print("=== Game Coordinate System ===\n")
 
     coordinates = (10, 20, 5)
@@ -65,9 +63,10 @@ if __name__ == "__main__":
         distance_2 = distance_calculator(parsed_position)
         print(f"{distance_2:.1f}\n")
 
+        parsing("abc,def,ghi")
+        print()
         unpacking_dem(parsed_position)
 
-    parsing("abc,def,ghi")
 
-    print("\n--- Testing Dimension Error (Unpacking Check) ---")
-    parsing("1,2")
+if __name__ == "__main__":
+    main()
