@@ -22,7 +22,7 @@ def ft_achievement_tracker() -> tuple:
     return players
 
 
-def ft_achievements_analytics(players) -> None:
+def ft_achievements_analytics(players: tuple) -> None:
     # UNION: Combines all sets into one, automatically removing duplicates to find every unique achievement available.
     unique_achievements = set().union(
         players[0]['achievements'],
@@ -51,7 +51,7 @@ def ft_achievements_analytics(players) -> None:
     rare_charlie = players[2]['achievements'].difference(
         players[0]['achievements'].union(players[1]['achievements'])
     )
-    
+
     # UNION: Combines the isolated unique achievements from each player into one "Rare" list.
     rare_achievements = rare_alice.union(rare_bob, rare_charlie)
     print(f"Rare achievements (1 player): {rare_achievements}\n")
