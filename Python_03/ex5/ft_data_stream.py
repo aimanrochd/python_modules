@@ -14,7 +14,7 @@ def stream_game_events(n_events: int) -> object:
     print(f"Processing {n_events} game events...\n")
 
     for i in range(1, n_events + 1):
-        
+
         try:
             current_name = next(name_iter)
         except StopIteration:
@@ -48,7 +48,7 @@ def process_analytics(n_events: int) -> None:
     score_high_level = 0
     score_treasure = 0
     score_level_up = 0
-    
+
     execution_time = 0.000
 
     for event in stream:
@@ -59,14 +59,14 @@ def process_analytics(n_events: int) -> None:
 
         if event['event_type'] == "found treasure":
             score_treasure += 0.268
-        
+
         if event['event_type'] == "leveled up":
             score_level_up += 0.468
 
         if total_count <= 3:
             print(f"Event {event['id']}: Player {event['player_name']} "
                   f"(level {event['level']}) {event['event_type']}")
-        
+
         elif total_count == 4:
             print("...")
 
@@ -112,14 +112,14 @@ def main() -> None:
 
     fib = fibonacci_generator()
     print("Fibonacci sequence (first 10):", end=" ")
-    
+
     for _ in range(9):
         print(next(fib), end=", ")
     print(next(fib))
 
     prime = prime_generator()
     print("Prime numbers (first 5):", end=" ")
-    
+
     for _ in range(4):
         print(next(prime), end=", ")
     print(next(prime))

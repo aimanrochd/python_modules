@@ -17,11 +17,11 @@ def parse_inventory(args: list) -> dict:
 
             current_qty = inventory.get(name, 0)
             inventory[name] = current_qty + quantity
-  
+
         except ValueError:
             print(f"Error parsing '{arg}': Quantity must be a number")
             continue
-     
+
     return inventory
 
 
@@ -104,7 +104,7 @@ def group_categories(inventory: dict) -> dict:
             categories["Moderate"].update({item: quantity})
         else:
             categories["Scarce"].update({item: quantity})
-            
+
     return categories
 
 
@@ -121,16 +121,16 @@ def check_restock(inventory: dict) -> None:
     for item, quantity in inventory.items():
         if quantity < 2:
             restock_needed += [item]
-            
+
     print(f"Restock needed: {restock_needed}")
 
 
 def show_dict_properties(inventory: dict) -> None:
     print("=== Dictionary Properties Demo ===")
-    
+
     print(f"Dictionary keys: {[*inventory.keys()]}")
     print(f"Dictionary values: {[*inventory.values()]}")
-    
+
     search_item = 'sword'
     is_in_inventory = search_item in inventory
     print(f"Sample lookup - '{search_item}' in inventory: {is_in_inventory}")
@@ -142,19 +142,19 @@ def main() -> None:
         return
 
     inventory = parse_inventory(sys.argv[1:])
-    
+
     if not inventory:
         return
 
     print_analysis(inventory)
-    print() 
+    print()
     print_statistics(inventory)
-    print() 
-    
+    print()
+
     cats = group_categories(inventory)
     print_categories(cats)
-    print() 
-    
+    print()
+
     check_restock(inventory)
     print()
     show_dict_properties(inventory)
