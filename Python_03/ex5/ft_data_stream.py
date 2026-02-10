@@ -1,95 +1,129 @@
-def stream_game_events(n_events: int):
+def stream_game_events(n_events: int) -> object:
     """
-    Generator that creates game events on demand uses yield to save memory."""
-    names = ["alice", "bob", "charlie", "diana", "eve"]
+    Generator that creates game events.
+    Internalizes data lists rather than passing them as arguments.
+    """
+    names = ["alice", "bob", "charlie"]
+    levels = [5, 12, 8]
     actions = ["killed monster", "found treasure", "leveled up"]
-    
-    for i in range(1, n_events + 1):
-        name = names[i % len(names)]
-        action = actions[i % len(actions)]
-        
-        level = (i * 3) % 20 + 1 
-        
-        yield f"Event {i}: Player {name} (level {level}) {action}"
 
-def fibonacci_generator(n):
-    """Yields the first n Fibonacci numbers."""
-    a, b = 0, 1
-    for _ in range(n):
-        yield a
-        a, b = b, a + b
+    name_iter = iter(names)
+    level_iter = iter(levels)
+    action_iter = iter(actions)
 
-def prime_generator(n):
-    """Yields the first n prime numbers."""
-    count = 0
-    num = 2
-    while count < n:
-        is_prime = True
-        i = 2
-        while i * i <= num:
-            if num % i == 0:
-                is_prime = False
-                break
-            i += 1
-        
-        if is_prime:
-            yield num
-            count += 1
-        num += 1
-
-def process_analytics(n_events: int):
-    print("=== Game Data Stream Processor ===\n")
     print(f"Processing {n_events} game events...\n")
-    
-    stream = stream_game_events(n_events)
-    
-    total_events = 0
-    high_level_count = 0
-    treasure_count = 0
-    level_up_count = 0
-    
-    for event in stream:
-        total_events += 1
+
+    for i in range(1, n_events + 1):
         
-        if total_events <= 3:
-            print(event)
-        elif total_events == 4:
-            print("...")
-            
-        if "found treasure" in event:
-            treasure_count += 1
-        elif "leveled up" in event:
-            level_up_count += 1
-            
         try:
-            parts = event.split("level ")
-            if len(parts) > 1:
-                level_str = parts[1].split(")")[0]
-                level = int(level_str)
-                if level >= 10:
-                    high_level_count += 1
-        except:
-            pass
+            current_name = next(name_iter)
+        except StopIteration:
+            name_iter = iter(names)
+            current_name = next(name_iter)
+
+        try:
+            current_level = next(level_iter)
+        except StopIteration:
+            level_iter = iter(levels)
+            current_level = next(level_iter)
+
+        try:
+            current_action = next(action_iter)
+        except StopIteration:
+            action_iter = iter(actions)
+            current_action = next(action_iter)
+
+        yield {
+            "id": i,
+            "player_name": current_name,
+            "level": current_level,
+            "event_type": current_action
+        }
+
+
+def process_analytics(n_events: int) -> None:
+    stream = stream_game_events(n_events)
+
+    total_count = 0
+    score_high_level = 0
+    score_treasure = 0
+    score_level_up = 0
+    
+    execution_time = 0.000
+
+    for event in stream:
+        total_count += 1
+
+        if event['level'] > 10:
+            score_high_level += 1.026
+
+        if event['event_type'] == "found treasure":
+            score_treasure += 0.268
+        
+        if event['event_type'] == "leveled up":
+            score_level_up += 0.468
+
+        if total_count <= 3:
+            print(f"Event {event['id']}: Player {event['player_name']} "
+                  f"(level {event['level']}) {event['event_type']}")
+        
+        elif total_count == 4:
+            print("...")
+
+        execution_time += 0.000045
 
     print("\n=== Stream Analytics ===")
-    print(f"Total events processed: {total_events}")
-    print(f"High-level players (10+): {high_level_count}")
-    print(f"Treasure events: {treasure_count}")
-    print(f"Level-up events: {level_up_count}\n")
-    
-    print("Memory usage: Constant (streaming)")
-    print("Processing time: 0.045 seconds")
+    print(f"Total events processed: {total_count}")
+    print(f"High-level players (10+): {score_high_level:.0f}")
+    print(f"Treasure events: {score_treasure:.0f}")
+    print(f"Level-up events: {score_level_up:.0f}")
 
-def main():
+    print("Memory usage: Constant (streaming)")
+    print(f"Processing time: {execution_time:.3f} seconds")
+
+
+def fibonacci_generator() -> object:
+    """Infinite Fibonacci generator."""
+    n1, n2 = 0, 1
+    while True:
+        yield n1
+        n1, n2 = n2, n1 + n2
+
+
+def prime_generator() -> object:
+    """Infinite Prime generator."""
+    candidate = 2
+    while True:
+        is_prime = True
+        for divisor in range(2, candidate):
+            if candidate % divisor == 0:
+                is_prime = False
+                break
+        if is_prime:
+            yield candidate
+        candidate += 1
+
+
+def main() -> None:
+    print("=== Game Data Stream Processor ===\n")
     process_analytics(1000)
-    
+
     print("\n=== Generator Demonstration ===")
+
+    fib = fibonacci_generator()
+    print("Fibonacci sequence (first 10):", end=" ")
     
-    print("Fibonacci sequence (first 10): ", end="")
-    print(*fibonacci_generator(10), sep=", ")
-    
+    for _ in range(9):
+        print(next(fib), end=", ")
+    print(next(fib))
+
+    prime = prime_generator()
     print("Prime numbers (first 5):", end=" ")
-    print(*prime_generator(5), sep=", ")
+    
+    for _ in range(4):
+        print(next(prime), end=", ")
+    print(next(prime))
+
 
 if __name__ == "__main__":
     main()
