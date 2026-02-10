@@ -11,17 +11,17 @@ def parse_inventory(args: list) -> dict:
             if len(parts) != 2:
                 print(f"Error parsing '{arg}': Format must be item:quantity")
                 continue
-            
+
             name = parts[0]
             quantity = int(parts[1])
-            
+
             current_qty = inventory.get(name, 0)
             inventory[name] = current_qty + quantity
-            
+  
         except ValueError:
             print(f"Error parsing '{arg}': Quantity must be a number")
             continue
-            
+     
     return inventory
 
 
@@ -31,7 +31,7 @@ def print_analysis(inventory: dict) -> None:
     total_items = 0
     for qty in inventory.values():
         total_items += qty
-        
+
     unique_items = len(inventory)
 
     print(f"Total items in inventory: {total_items}")
@@ -42,12 +42,16 @@ def print_analysis(inventory: dict) -> None:
     items_list = []
     for k, v in inventory.items():
         items_list += [(k, v)]
-    
+
     n = len(items_list)
-    for i in range(n):
-        for j in range(0, n - i - 1):
+    i = 0
+    while i < n:
+        j = 0
+        while j < n - i - 1:
             if items_list[j][1] < items_list[j+1][1]:
                 items_list[j], items_list[j+1] = items_list[j+1], items_list[j]
+            j += 1
+        i += 1
 
     for item, quantity in items_list:
         if total_items > 0:
@@ -60,14 +64,14 @@ def print_analysis(inventory: dict) -> None:
 def print_statistics(inventory: dict) -> None:
     """Finds most and least abundant items manually (No max/min)."""
     print("=== Inventory Statistics ===")
-    
+
     if not inventory:
         print("No items to calculate statistics.")
         return
-    
+
     keys_view = list(inventory.keys())
     first_key = keys_view[0]
-    
+
     most_abundant = first_key
     least_abundant = first_key
     max_count = inventory[first_key]
@@ -77,8 +81,8 @@ def print_statistics(inventory: dict) -> None:
         if quantity > max_count:
             most_abundant = item
             max_count = quantity
-        
-        if quantity < min_count:
+
+        elif quantity < min_count:
             least_abundant = item
             min_count = quantity
 
@@ -123,8 +127,9 @@ def check_restock(inventory: dict) -> None:
 
 def show_dict_properties(inventory: dict) -> None:
     print("=== Dictionary Properties Demo ===")
-    print(f"Dictionary keys: {list(inventory.keys())}")
-    print(f"Dictionary values: {list(inventory.values())}")
+    
+    print(f"Dictionary keys: {[*inventory.keys()]}")
+    print(f"Dictionary values: {[*inventory.values()]}")
     
     search_item = 'sword'
     is_in_inventory = search_item in inventory
