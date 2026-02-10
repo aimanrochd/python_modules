@@ -6,18 +6,29 @@ def create_position(coordinates: tuple) -> tuple:
     return coordinates
 
 
-def distance_calculator(pos: tuple) -> float:
+def distance_calculator(target_pos: tuple, base_pos:
+                        tuple = (0, 0, 0)) -> float | None:
+    """
+    Calculates distance. Returns -1.0 if unpacking fails.
+    """
+    try:
+        x1, y1, z1 = target_pos
 
-    base_x, base_y, base_z = 0, 0, 0
-    pos_x, pos_y, pos_z = pos
+        x2, y2, z2 = base_pos
 
-    distance = math.sqrt(
-        (pos_x - base_x)**2 +
-        (pos_y - base_y)**2 +
-        (pos_z - base_z)**2
-    )
-    print(f"Distance between (0, 0, 0) and {pos}: ", end="")
-    return distance
+        distance = math.sqrt(
+            (x2 - x1)**2 +
+            (y2 - y1)**2 +
+            (z2 - z1)**2
+        )
+
+        print(f"Distance between {base_pos} and {target_pos}: ", end="")
+        return distance
+
+    except ValueError:
+        print(f"Error: Invalid position format. "
+              f"Got {target_pos} and {base_pos}")
+        return None
 
 
 def parsing(coordinates: str) -> tuple | None:
@@ -32,10 +43,8 @@ def parsing(coordinates: str) -> tuple | None:
         print(f"Parsed position: {parsed_position}")
         return parsed_position
 
-    except ValueError as e:
-        print(f"Parsing invalid coordinates: \"{coordinates}\"")
-        print(f"Error parsing coordinates: {e}")
-        print(f"Error details Type: {type(e).__name__}, Args: {e.args}")
+    except ValueError:
+        print(f"Error: Invalid coordinates \"{coordinates}\". Usage: x,y,z")
         return None
 
 
@@ -55,17 +64,19 @@ def main() -> None:
     coordinates = (10, 20, 5)
     pos = create_position(coordinates)
 
-    distance = distance_calculator(pos)
-    print(f"{distance:.2f}\n")
+    dist = distance_calculator(pos)
+    if dist is not None:
+        print(f"{dist:.2f}\n")
 
-    parsed_position = parsing("3,4,0")
-    if parsed_position:
-        distance_2 = distance_calculator(parsed_position)
-        print(f"{distance_2:.1f}\n")
+    parsed_pos = parsing("3,4,0")
+    if parsed_pos:
+        dist_2 = distance_calculator(parsed_pos)
+        if dist_2 is not None:
+            print(f"{dist_2:.1f}\n")
 
         parsing("abc,def,ghi")
         print()
-        unpacking_dem(parsed_position)
+        unpacking_dem(parsed_pos)
 
 
 if __name__ == "__main__":

@@ -8,7 +8,7 @@ def ft_score_analytics() -> None:
             for arg in sys.argv[1:]:
                 scores += [int(arg)]
         except ValueError:
-            print("Error: Non-numeric value found. "
+            print("Error: Non valid value found. "
                   "Please provide integers only.")
             return
         if not scores:
@@ -27,7 +27,7 @@ def ft_score_analytics() -> None:
         low_score = min(scores)
         score_range = high_score - low_score
 
-        print(f"Average score: {average}")
+        print(f"Average score: {average:.1f}")
         print(f"High score: {high_score}")
         print(f"Low score: {low_score}")
         print(f"Score range: {score_range}")
