@@ -105,9 +105,9 @@ def group_categories(inventory: dict) -> dict:
 
 def print_categories(categories: dict) -> None:
     print("=== Item Categories ===")
-    for cat_name, items in categories.items():
+    for name, items in categories.items():
         if len(items) > 0:
-            print(f"{cat_name}: {items}")
+            print(f"{name}: {items}")
 
 
 def check_restock(inventory: dict) -> None:

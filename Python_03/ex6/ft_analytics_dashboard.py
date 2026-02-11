@@ -57,7 +57,7 @@ def analyze_lists(players: list[dict]) -> None:
 
 def analyze_dicts(players: list[dict]) -> None:
     player_scores = {player["name"]: player["score"] for player in players}
-    score_categories: list[str, int] = {
+    score_categories: dict[str, int] = {
         "high": len([p for p in players if p["score"] > 2200]),
         "medium": len([p for p in players if 1500 <= p["score"] <= 2200]),
         "low": len([p for p in players if p["score"] < 1500])
@@ -91,7 +91,7 @@ def print_summary(players: list[dict]) -> None:
     all_players: list[str] = [player["name"] for player in players]
     total_players = len(all_players)
     scores: list[int] = [player["score"] for player in players]
-    total_score = max(scores)
+    total_score = sum(scores)
     average_score = total_score / total_players
     max_score: int = max([p["score"] for p in players])
     top_players_list: list[dict] = [p for p in players
