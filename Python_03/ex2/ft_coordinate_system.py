@@ -8,9 +8,6 @@ def create_position(coordinates: tuple) -> tuple:
 
 def distance_calculator(target_pos: tuple, base_pos:
                         tuple = (0, 0, 0)) -> float | None:
-    """
-    Calculates distance. Returns -1.0 if unpacking fails.
-    """
     try:
         x1, y1, z1 = target_pos
 
@@ -34,17 +31,17 @@ def distance_calculator(target_pos: tuple, base_pos:
 def parsing(coordinates: str) -> tuple | None:
     try:
         parts = coordinates.split(',')
-
         p1, p2, p3 = parts
-
         parsed_position = (int(p1), int(p2), int(p3))
-
         print(f"Parsing coordinates: \"{coordinates}\"")
         print(f"Parsed position: {parsed_position}")
         return parsed_position
-
-    except ValueError:
-        print(f"Error: Invalid coordinates \"{coordinates}\". Usage: x,y,z")
+    except ValueError as e:
+        error_type = e.__class__.__name__
+        error_args = e.args
+        print(f"Parsing invalid coordinates: \"{coordinates}\"")
+        print(f"Error parsing coordinates: {e}")
+        print(f"Error details - Type: {error_type}, Args: {error_args}")
         return None
 
 

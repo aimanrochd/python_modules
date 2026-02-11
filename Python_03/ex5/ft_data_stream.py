@@ -1,8 +1,7 @@
-def stream_game_events(n_events: int) -> object:
-    """
-    Generator that creates game events.
-    Internalizes data lists rather than passing them as arguments.
-    """
+import typing
+
+
+def stream_game_events(n_events: int) -> typing.Generator:
     names = ["alice", "bob", "charlie"]
     levels = [5, 12, 8]
     actions = ["killed monster", "found treasure", "leveled up"]
@@ -82,16 +81,14 @@ def process_analytics(n_events: int) -> None:
     print(f"Processing time: {execution_time:.3f} seconds")
 
 
-def fibonacci_generator() -> object:
-    """Infinite Fibonacci generator."""
+def fibonacci_generator() -> typing.Generator:
     n1, n2 = 0, 1
     while True:
         yield n1
         n1, n2 = n2, n1 + n2
 
 
-def prime_generator() -> object:
-    """Infinite Prime generator."""
+def prime_generator() -> typing.Generator:
     candidate = 2
     while True:
         is_prime = True

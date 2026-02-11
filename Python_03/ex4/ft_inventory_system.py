@@ -2,7 +2,6 @@ import sys
 
 
 def parse_inventory(args: list) -> dict:
-    """Parses arguments using split/int for readability."""
     inventory = dict()
 
     for arg in args:
@@ -62,14 +61,13 @@ def print_analysis(inventory: dict) -> None:
 
 
 def print_statistics(inventory: dict) -> None:
-    """Finds most and least abundant items manually (No max/min)."""
     print("=== Inventory Statistics ===")
 
     if not inventory:
         print("No items to calculate statistics.")
         return
 
-    keys_view = list(inventory.keys())
+    keys_view = [*inventory.keys()]
     first_key = keys_view[0]
 
     most_abundant = first_key
@@ -92,15 +90,12 @@ def print_statistics(inventory: dict) -> None:
 
 def group_categories(inventory: dict) -> dict:
     categories = {
-        "Abundant": {},
         "Moderate": {},
         "Scarce": {}
     }
 
     for item, quantity in inventory.items():
-        if quantity > 5:
-            categories["Abundant"].update({item: quantity})
-        elif quantity >= 2:
+        if quantity >= 5:
             categories["Moderate"].update({item: quantity})
         else:
             categories["Scarce"].update({item: quantity})

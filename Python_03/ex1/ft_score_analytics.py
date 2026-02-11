@@ -11,9 +11,6 @@ def ft_score_analytics() -> None:
             print("Error: Non valid value found. "
                   "Please provide integers only.")
             return
-        if not scores:
-            print("Error: No valid scores to process.")
-            return
         print(f"Scores processed: {scores}")
 
         total_players = len(scores)
