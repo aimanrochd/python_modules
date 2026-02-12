@@ -22,7 +22,7 @@ def distance_calculator(target_pos: tuple, base_pos:
         print(f"Distance between {base_pos} and {target_pos}: ", end="")
         return distance
 
-    except ValueError:
+    except (ValueError, TypeError):
         print(f"Error: Invalid position format. "
               f"Got {target_pos} and {base_pos}")
         return None
@@ -77,4 +77,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")

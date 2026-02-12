@@ -23,4 +23,7 @@ def ft_command_quest() -> None:
 
 
 if __name__ == "__main__":
-    ft_command_quest()
+    try:
+        ft_command_quest()
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")

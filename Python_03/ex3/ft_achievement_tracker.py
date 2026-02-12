@@ -67,8 +67,11 @@ def ft_achievements_analytics(players: tuple) -> None:
 
 
 if __name__ == "__main__":
-    print("=== Achievement Tracker System ===\n")
-    players = ft_achievement_tracker()
-    print()
-    print("=== Achievement Analytics ===")
-    ft_achievements_analytics(players)
+    try:
+        print("=== Achievement Tracker System ===\n")
+        players = ft_achievement_tracker()
+        print()
+        print("=== Achievement Analytics ===")
+        ft_achievements_analytics(players)
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")

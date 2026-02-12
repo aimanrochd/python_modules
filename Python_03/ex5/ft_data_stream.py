@@ -89,16 +89,16 @@ def fibonacci_generator() -> typing.Generator:
 
 
 def prime_generator() -> typing.Generator:
-    candidate = 2
+    nbr = 2
     while True:
         is_prime = True
-        for divisor in range(2, candidate):
-            if candidate % divisor == 0:
+        for divisor in range(2, nbr):
+            if nbr % divisor == 0:
                 is_prime = False
                 break
         if is_prime:
-            yield candidate
-        candidate += 1
+            yield nbr
+        nbr += 1
 
 
 def main() -> None:
@@ -123,4 +123,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:
+        print(f"An unexpected error occurred during streaming: {e}")

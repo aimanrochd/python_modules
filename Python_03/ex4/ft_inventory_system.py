@@ -63,10 +63,6 @@ def print_analysis(inventory: dict) -> None:
 def print_statistics(inventory: dict) -> None:
     print("=== Inventory Statistics ===")
 
-    if not inventory:
-        print("No items to calculate statistics.")
-        return
-
     keys_view = [*inventory.keys()]
     first_key = keys_view[0]
 
@@ -90,12 +86,15 @@ def print_statistics(inventory: dict) -> None:
 
 def group_categories(inventory: dict) -> dict:
     categories = {
+        "Abundant": {},
         "Moderate": {},
         "Scarce": {}
     }
 
     for item, quantity in inventory.items():
-        if quantity >= 5:
+        if quantity > 10:
+            categories["Abundant"].update({item: quantity})
+        elif quantity >= 5:
             categories["Moderate"].update({item: quantity})
         else:
             categories["Scarce"].update({item: quantity})
@@ -156,4 +155,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")

@@ -34,5 +34,8 @@ def ft_score_analytics() -> None:
 
 
 if __name__ == "__main__":
-    print("=== Player Score Analytics ===")
-    ft_score_analytics()
+    try:
+        print("=== Player Score Analytics ===")
+        ft_score_analytics()
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
