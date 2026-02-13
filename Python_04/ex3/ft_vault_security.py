@@ -12,10 +12,10 @@ def secure_vault_operations(read_file: str, write_file: str) -> None:
         print("SECURE PRESERVATION:")
         vault.write("[CLASSIFIED] New security protocols archived")
         print("[CLASSIFIED] New security protocols archived")
-        print("Vault automatically sealed upon completion")
 
-        print("\nAll vault operations completed with maximum security.")
+    print("Vault automatically sealed upon completion")
+    print("\nAll vault operations completed with maximum security.")
 
 
 if __name__ == "__main__":
-    secure_vault_operations('../ancient_fragment.txt', 'security_log.txt')
+    secure_vault_operations('ancient_fragment.txt', 'security_log.txt')

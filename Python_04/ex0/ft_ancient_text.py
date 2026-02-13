@@ -1,13 +1,20 @@
 def recover_ancient_text(filename: str) -> None:
-
-    file = open(filename, 'r')
-    content = file.read()
-
     print("=== CYBER ARCHIVES - DATA RECOVERY SYSTEM ===\n")
+
+    try:
+        file = open(filename, 'r')
+    except FileNotFoundError:
+        print("ERROR: Storage vault not found. Run data generator first.")
+        return
+
     print(f"Accessing Storage Vault: {filename}")
     print("Connection established...\n")
+
+    content = file.read()
+
     print("RECOVERED DATA:")
     print(content)
+
     print("\nData recovery complete. Storage unit disconnected.")
     file.close()
 

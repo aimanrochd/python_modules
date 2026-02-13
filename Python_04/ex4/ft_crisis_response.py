@@ -1,10 +1,11 @@
 def handle_crisis(filename: str) -> None:
     print(f"CRISIS ALERT: Attempting access to '{filename}'...")
+
     try:
         with open(filename, 'r') as vault:
             vault.read()
-            print("SUCCESS: Archive recovered. ''Knowledge preserved "
-                  "for humanity''")
+            print("SUCCESS: Archive recovered. Knowledge preserved "
+                  "for humanity.")
             print("STATUS: Normal operations resumed\n")
     except FileNotFoundError:
         print("RESPONSE: Archive not found in storage matrix")
@@ -12,8 +13,8 @@ def handle_crisis(filename: str) -> None:
     except PermissionError:
         print("RESPONSE: Security protocols deny access")
         print("STATUS: Crisis handled, security maintained\n")
-    except Exception:
-        print("RESPONSE: Unexpected system anomaly")
+    except Exception as e:
+        print(f"RESPONSE: Unexpected anomaly: {e}")
         print("STATUS: Crisis handled, system isolated\n")
 
 

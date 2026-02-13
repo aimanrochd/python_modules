@@ -5,8 +5,8 @@ def manage_streams() -> None:
     print("=== CYBER ARCHIVES - COMMUNICATION SYSTEM ===\n",
           file=sys.stdout)
 
-    arch_id: str = input("Input Stream active. Enter archivist ID: ")
-    status: str = input("Input Stream active. Enter status report: ")
+    arch_id = input("Input Stream active. Enter archivist ID: ")
+    status = input("Input Stream active. Enter status report: ")
 
     print(f"\n[STANDARD] Archive status from {arch_id}: {status}",
           file=sys.stdout)
