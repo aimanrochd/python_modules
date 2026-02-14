@@ -8,6 +8,7 @@ def secure_vault_operations(read_file: str, write_file: str) -> None:
         print("SECURE EXTRACTION:")
         print("[CLASSIFIED] Quantum encryption keys recovered")
         print("[CLASSIFIED] Archive integrity: 100%\n")
+
     with open(write_file, 'w') as vault:
         print("SECURE PRESERVATION:")
         vault.write("[CLASSIFIED] New security protocols archived")
