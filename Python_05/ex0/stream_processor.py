@@ -43,6 +43,7 @@ class NumericProcessor(DataProcessor):
         except Exception:
             is_list = False
 
+
         if is_list:
             for x in data:
                 total_sum += x
