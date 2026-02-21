@@ -1,7 +1,9 @@
-from typing import Any, List, Dict, Union, Optional
 from abc import ABC, abstractmethod
+from typing import Any, List, Dict, Union, Optional
+
 
 class DataProcessor(ABC):
+
     @abstractmethod
     def process(self, data: Any) -> str:
         pass
@@ -11,122 +13,129 @@ class DataProcessor(ABC):
         pass
 
     def format_output(self, result: str) -> str:
-        return f"Output {result}"
+        return f"Output: {result}"
 
 
 class NumericProcessor(DataProcessor):
+
     def validate(self, data: Any) -> bool:
-        try:
-            var = data / 1
-            return True
-        except Exception:
-            pass
-        try:
-            check_list = data + [] 
-            
-            for item in data:
-                try:
-                    var = item / 1
-                except Exception:
-                    return False
-            return True
-        except Exception:
-            return False
+        if not isinstance(data, list):
+            return isinstance(data, (int, float))
+        for item in data:
+            if not isinstance(item, (int, float)):
+                return False
+        return True
 
     def process(self, data: Any) -> str:
-        count = 0
-        total_sum = 0
-        is_list = False
         try:
-            check_list = data + []
-            is_list = True
-        except Exception:
-            is_list = False
+            if not self.validate(data):
+                raise ValueError("Invalid Data!")
 
+            if isinstance(data, (int, float)):
+                data = [data]
+            stats: Dict[str, Union[int, float]] = {}
 
-        if is_list:
-            for x in data:
-                total_sum += x
-                count += 1
-        else:
-            total_sum = data
-            count = 1
-        if count == 0:
-            average = 0.0
-        else:
-            average = total_sum / count
-            
-        return f"Processed {count} numeric values, sum={total_sum}, avg={average}"
+            if len(data) == 0:
+                stats["total"] = 0
+                stats["average"] = 0.0
+            else:
+                stats["total"] = sum(data)
+                stats["average"] = sum(data) / len(data)
 
-    def format_output(self, result: str) -> str:
-        return super().format_output(result)
+            result_str = (
+                f"Processed {len(data)} numeric values, "
+                f"sum={stats['total']}, avg={stats['average']:.1f}"
+            )
+            return super().format_output(result_str)
+
+        except Exception as e:
+            return f"Error: {e}"
 
 
 class TextProcessor(DataProcessor):
+
     def validate(self, data: Any) -> bool:
-        try:
-            data += ""
-            return True
-        except Exception:
-            return False
+        return isinstance(data, str)
 
     def process(self, data: Any) -> str:
-        char_count = 0
-        word_count = 0
-        in_word = False
-        for char in data:
-            char_count += 1
-            if char == ' ':
-                in_word = False
-            elif in_word == False:
-                word_count += 1
-                in_word = True
-            
-        return f"Processed text: {char_count} characters, {word_count} words"
-
-
-    def format_output(self, result: str) -> str:
-        return super().format_output(result)
+        try:
+            if not self.validate(data):
+                raise ValueError("Invalid Data")
+            total_chars = len(data)
+            total_words = len(data.split())
+            result_str = f"Processed text: {total_chars} characters, "
+            f"{total_words} words"
+            return super().format_output(result_str)
+        except Exception as e:
+            return f"Error: {e}"
 
 
 class LogProcessor(DataProcessor):
-    def validate(self, data: Any) -> bool:
-        try:
-            check = data + ""
-        except Exception:
-            return False
 
-        has_colon = False
-        for char in data:
-            if char == ':':
-                has_colon = True
-        
-        return has_colon
+    def validate(self, data: Any) -> bool:
+        if not isinstance(data, str):
+            return False
+        if ':' not in data:
+            return False
+        return True
 
     def process(self, data: Any) -> str:
-        colon_index = -1
-        
-        current_index = 0
-        for char in data:
-            if char == ':' and colon_index == -1:
-                colon_index = current_index
-            current_index += 1
-            
-        if colon_index != -1:
-            level = data[:colon_index]
-            
-            msg_start = colon_index + 1
-            
-            if msg_start < current_index:
-                if data[msg_start] == ' ':
-                    msg_start += 1
-            
-            message = data[msg_start:]
-        else:
-            level = "UNKNOWN"
-            message = data
+        try:
+            if not self.validate(data):
+                raise ValueError("Invalid Data")
 
-        return f"[ALERT] {level} level detected: {message}"
+            parts: List[str] = data.split(':', 1)
+            level = parts[0].strip()
+            message = parts[1].strip()
 
-    def format_output(self, result: str) -> str:
-        return super().format_output(result)
+            alert_type: Optional[str] = "ALERT" if level == "ERROR" else "INFO"
+
+            result_str = f"[{alert_type}] {level} level detected: {message}"
+            return super().format_output(result_str)
+
+        except Exception as e:
+            return f"Error: {e}"
+
+
+if __name__ == "__main__":
+    print("=== CODE NEXUS - DATA PROCESSOR FOUNDATION ===\n")
+
+    print("Initializing Numeric Processor...")
+    num_proc = NumericProcessor()
+    data1 = [1, 2, 3, 4, 5]
+    print(f"Processing data: {data1}")
+    if num_proc.validate(data1):
+        print("Validation: Numeric data verified")
+    print(num_proc.process(data1))
+    print()
+
+    print("Initializing Text Processor...")
+    text_proc = TextProcessor()
+    data2 = "Hello Nexus World"
+    print(f'Processing data: "{data2}"')
+    if text_proc.validate(data2):
+        print("Validation: Text data verified")
+    print(text_proc.process(data2))
+    print()
+
+    print("Initializing Log Processor...")
+    log_proc = LogProcessor()
+    data3 = "ERROR: Connection timeout"
+    print(f'Processing data: "{data3}"')
+    if log_proc.validate(data3):
+        print("Validation: Log entry verified")
+    print(log_proc.process(data3))
+    print()
+
+    print("=== Polymorphic Processing Demo ===")
+    print("Processing multiple data types through same interface....")
+
+    res1 = NumericProcessor().process([1, 2, 3])
+    res2 = TextProcessor().process("Nexus System")
+    res3 = LogProcessor().process("INFO: System ready")
+
+    print(res1.replace("Output: ", "Result 1: "))
+    print(res2.replace("Output: ", "Result 2: "))
+    print(res3.replace("Output: ", "Result 3: "))
+
+    print("\nFoundation systems online. Nexus ready for advanced streams.")
