@@ -1,6 +1,7 @@
 from typing import Any, List, Dict, Union, Protocol
 from abc import ABC, abstractmethod
 import collections
+import json
 
 del collections
 
@@ -21,7 +22,7 @@ class InputStage:
             return {"raw": data}
         elif isinstance(data, list):
             return {"raw": data}
-        return {"raw": data}
+        return {"Fraw": data}
 
 
 class TransformStage:
@@ -36,14 +37,12 @@ class TransformStage:
             print(f"{transform} Parsed and structured data")
             lines = [
                 line.strip()
-                for line in data["raw"].strip().split("\n")
+                for line in data["raw"].strip().split('\n')
                 if line.strip()
             ]
             data["parsed_count"] = len(lines[1:]) if len(lines) > 1 else 0
         elif isinstance(data.get("raw"), list):
-            nums = [
-                x for x in data["raw"] if isinstance(x, (int, float))
-            ]
+            nums = [x for x in data["raw"] if isinstance(x, (int, float))]
             avg = sum(nums) / len(nums) if nums else 0.0
             print(f"{transform} Aggregated and filtered")
             data["avg_val"] = round(avg, 1)
@@ -108,7 +107,6 @@ class JSONAdapter(ProcessingPipeline):
 
     def process(self, data: Any) -> Union[str, Any]:
         try:
-            import json
             parsed = json.loads(data) if isinstance(data, str) else data
             return self.run_stages(parsed)
         except Exception as e:

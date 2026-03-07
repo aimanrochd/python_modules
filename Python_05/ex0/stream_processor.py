@@ -99,7 +99,7 @@ class LogProcessor(DataProcessor):
             return f"Error: {e}"
 
 
-if __name__ == "__main__":
+def main() -> None:
     print("=== CODE NEXUS - DATA PROCESSOR FOUNDATION ===\n")
 
     print("Initializing Numeric Processor...")
@@ -141,3 +141,7 @@ if __name__ == "__main__":
     print(res3.replace("Output: ", "Result 3: "))
 
     print("\nFoundation systems online. Nexus ready for advanced streams.")
+
+
+if __name__ == "__main__":
+    main()
