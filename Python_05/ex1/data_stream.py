@@ -205,22 +205,23 @@ class StreamProcessor:
         results: List[str] = []
 
         for i in range(len(self.streams)):
+            stream = self.streams[i]
 
             try:
                 if i >= len(data_batches):
                     results.append("Error: Missing data batch for stream")
                     continue
 
-                stream = self.streams[i]
                 batch = data_batches[i]
-
                 filtered_batch = stream.filter_data(batch, criteria)
                 result = stream.process_batch(filtered_batch)
-
                 results.append(result)
 
             except Exception as e:
-                results.append(f"Error processing stream: {e}")
+                print(f"Error detected in stream {stream.stream_id}: {e}")
+                print("Recovery initiated: processing empty batch")
+                recovered_result = stream.process_batch([])
+                results.append(f"Recovered: {recovered_result}")
 
         return results
 
@@ -228,57 +229,56 @@ class StreamProcessor:
 def main() -> None:
     print("=== CODE NEXUS - POLYMORPHIC STREAM SYSTEM ===\n")
 
-    print("Initializing Sensor Stream...")
-    print("Stream ID: SENSOR_001, Type: Environmental Data")
-    print("Processing sensor batch: [temp:22.5, humidity:65, pressure:1013]")
-    sensor = SensorStream("SENSOR_001")
-    print(sensor.process_batch([22.5, 22.5, 22.5]))
+    stream_types = ["Sensor", "Transaction", "Event"]
 
-    print("\nInitializing Transaction Stream...")
-    print("Stream ID: TRANS_001, Type: Financial Data")
-    print("Processing transaction batch: [buy:100, sell:150, buy:75]")
-    trx = TransactionStream("TRANS_001")
-    print(trx.process_batch(["buy: 100", "sell: 150", "buy: 75"]))
+    streams_info = [
+        ("SENSOR_001", SensorStream, [22.5, 22.5, 22.5], "Environmental Data"),
+        ("TRANS_001", TransactionStream, ["buy: 100", "sell: 150", "buy: 75"],
+         "Financial Data"),
+        ("EVENT_001", EventStream, ["login", "error", "logout"],
+         "System Events")
+    ]
 
-    print("\nInitializing Event Stream...")
-    print("Stream ID: EVENT_001, Type: System Events")
-    print("Processing event batch: [login, error, logout]")
-    evt = EventStream("EVENT_001")
-    print(evt.process_batch(["login", "error", "logout"]))
+    stream_objects = []
 
-    print("\n=== Polymorphic Stream Processing ===")
-    print("Processing mixed stream types through unified interface...")
-    print("\nBatch 1 Results:")
+    for idx, (stream_id, cls, batch, stype) in enumerate(streams_info):
+        label = stream_types[idx]
+        print(f"Initializing {label} Stream...")
+        print(f"Stream ID: {stream_id}, Type: {stype}")
+        print(f"Processing {label.lower()} batch: {batch}")
+        obj = cls(stream_id)
+        stream_objects.append((obj, batch))
+        print(obj.process_batch(batch))
+        print()
+
+    print("=== Polymorphic Stream Processing ===")
+    print("Processing mixed stream types through unified "
+          "interface...\nBatch 1 Results:")
 
     processor = StreamProcessor()
-    processor.add_stream(sensor)
-    processor.add_stream(trx)
-    processor.add_stream(evt)
+    data_batches = []
 
-    batch_sensor = [10.0, 40.0]
-    batch_trx = ["buy:100", "sell:50", "buy:25", "sell:10"]
-    batch_evt = ["login", "error", "logout"]
+    for obj, batch in stream_objects:
+        processor.add_stream(obj)
+        data_batches.append(batch)
 
-    data_batches = [batch_sensor, batch_trx, batch_evt]
-
-    results = processor.process_all(data_batches)
-
-    sensor_count = len(sensor.filter_data(batch_sensor, None))
-    trx_count = len(trx.filter_data(batch_trx, None))
-    evt_count = len(evt.filter_data(batch_evt, None))
-
-    if any(result.startswith("Error") for result in results):
-        print("Warning: One or more streams encountered an error.")
-
-    print(f"- Sensor data: {sensor_count} readings processed")
-    print(f"- Transaction data: {trx_count} operations processed")
-    print(f"- Event data: {evt_count} events processed")
+    for idx, (obj, batch) in enumerate(stream_objects):
+        label = stream_types[idx]
+        count = len(obj.filter_data(batch if batch else [], None))
+        if isinstance(obj, SensorStream):
+            print(f"- {label} data: {count} readings processed")
+        elif isinstance(obj, TransactionStream):
+            print(f"- {label} data: {count} operations processed")
+        elif isinstance(obj, EventStream):
+            print(f"- {label} data: {count} events processed")
 
     print("\nStream filtering active: High-priority data only")
 
-    critical_alerts = len(sensor.filter_data([10.0, 40.0, 35.0], "high"))
+    critical_alerts = len(stream_objects[0][0].filter_data
+                          ([10.0, 40.0, 35.0], "high"))
     large_transactions = len(
-        trx.filter_data(["buy:50", "sell:200", "buy:20"], "large")
+        stream_objects[1][0].filter_data(["buy:50", "sell:200",
+                                          "buy:20"], "large")
     )
 
     print(
@@ -286,6 +286,11 @@ def main() -> None:
         f"{large_transactions} large transaction"
     )
 
+    print("\nSimulating pipeline failure for Transaction Stream...")
+    data_batches_with_error = data_batches.copy()
+    data_batches_with_error[1] = None
+
+    processor.process_all(data_batches_with_error)
     print("\nAll streams processed successfully. Nexus throughput optimal.")
 
 

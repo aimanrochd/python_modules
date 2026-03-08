@@ -1,7 +1,6 @@
-from typing import Any, List, Dict, Union, Protocol
+from typing import Any, List, Dict, Union, Optional, Protocol
 from abc import ABC, abstractmethod
 import collections
-import json
 
 del collections
 
@@ -15,15 +14,17 @@ class InputStage:
     def process(self, data: Any) -> Dict[str, Any]:
         if data is None:
             return {}
-        print(f"Input: {data}")
         if isinstance(data, dict):
-            print(f"Input: {json.dumps(data)}")
+            print(f"Input: {data}")
             return data
         elif isinstance(data, str):
+            print(f"Input: {data}")
             return {"raw": data}
         elif isinstance(data, list):
+            print(f"Input: {data}")
             return {"raw": data}
-        return {"Fraw": data}
+        else:
+            raise TypeError(f"Unsupported data type: {type(data).__name__}")
 
 
 class TransformStage:
@@ -108,8 +109,7 @@ class JSONAdapter(ProcessingPipeline):
 
     def process(self, data: Any) -> Union[str, Any]:
         try:
-            parsed = json.loads(data) if isinstance(data, str) else data
-            return self.run_stages(parsed)
+            return self.run_stages(data)
         except Exception as e:
             return f"JSON error: {str(e)}"
 
@@ -144,7 +144,10 @@ class NexusManager:
     def __init__(self) -> None:
         self.pipelines: List[ProcessingPipeline] = []
 
-    def add_pipeline(self, pipeline: ProcessingPipeline) -> None:
+    def add_pipeline(self, pipeline: ProcessingPipeline,
+                     tag: Optional[str] = None) -> None:
+        if tag is not None:
+            print(f'Adding pipeline: {pipeline.pipeline_id} [{tag}]')
         self.pipelines.append(pipeline)
 
     def process_data(self, data: Any) -> List[Any]:
@@ -164,9 +167,8 @@ class NexusManager:
         print("\n=== Error Recovery Test ===")
         print("Simulating pipeline failure...")
         results = self.process_data(None)
-        stages = [InputStage(), TransformStage(), OutputStage()]
         empty = sum(1 for r in results if not r)
-        if empty == len(stages):
+        if empty == len(self.pipelines):
             print("Error detected in Stage 2: Invalid data format")
             print("Recovery initiated: Switching to backup processor")
             print(
@@ -202,7 +204,7 @@ def main() -> None:
     print(adapters[0].process(json_data))
 
     print("\nProcessing CSV data through same pipeline...")
-    csv_data = "user,action,timestamp\n"
+    csv_data = "user,action,timestamp\nalice,login,2087-01-01"
     print(adapters[1].process(csv_data))
 
     print("\nProcessing Stream data through same pipeline...")
