@@ -113,7 +113,7 @@ class TransactionStream(DataStream):
         try:
             flows: List[float] = [
                 float(item.split(':')[1]) if "buy" in item
-                else - float(item.split(':')[1])
+                else -float(item.split(':')[1])
                 for item in data_batch
                 if isinstance(item, str) and ':' in item
             ]

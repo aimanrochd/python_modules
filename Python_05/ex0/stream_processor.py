@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Any, Dict, List, Union
+from typing import Any, Dict, List, Union, Optional
 
 
 class DataProcessor(ABC):
@@ -34,13 +34,16 @@ class NumericProcessor(DataProcessor):
             if isinstance(data, (int, float)):
                 data = [data]
             stats: Dict[str, Union[int, float]] = {}
+            average: Optional[float] = None
 
             if len(data) == 0:
                 stats["total"] = 0
-                stats["average"] = 0.0
+                average = 0.0
             else:
                 stats["total"] = sum(data)
-                stats["average"] = sum(data) / len(data)
+                average = sum(data) / len(data)
+
+            stats["average"] = average
 
             result_str = (
                 f"Processed {len(data)} numeric values, "
@@ -104,20 +107,20 @@ def main() -> None:
 
     print("Initializing Numeric Processor...")
     num_proc = NumericProcessor()
-    data1 = [1, 2, 3, 4, 5]
-    print(f"Processing data: {data1}")
-    if num_proc.validate(data1):
+    numeric_data = [1, 2, 3, 4, 5]
+    print(f"Processing data: {numeric_data}")
+    if num_proc.validate(numeric_data):
         print("Validation: Numeric data verified")
-    print(num_proc.process(data1))
+    print(num_proc.process(numeric_data))
     print()
 
     print("Initializing Text Processor...")
     text_proc = TextProcessor()
-    data2 = "Hello Nexus World"
-    print(f'Processing data: "{data2}"')
-    if text_proc.validate(data2):
+    test_data = "Hello Nexus World"
+    print(f'Processing data: "{test_data}"')
+    if text_proc.validate(test_data):
         print("Validation: Text data verified")
-    print(text_proc.process(data2))
+    print(text_proc.process(test_data))
     print()
 
     print("Initializing Log Processor...")

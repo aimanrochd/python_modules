@@ -17,6 +17,7 @@ class InputStage:
             return {}
         print(f"Input: {data}")
         if isinstance(data, dict):
+            print(f"Input: {json.dumps(data)}")
             return data
         elif isinstance(data, str):
             return {"raw": data}
@@ -201,7 +202,7 @@ def main() -> None:
     print(adapters[0].process(json_data))
 
     print("\nProcessing CSV data through same pipeline...")
-    csv_data = "user,action,timestamp\nalice,login,2087-01-01"
+    csv_data = "user,action,timestamp\n"
     print(adapters[1].process(csv_data))
 
     print("\nProcessing Stream data through same pipeline...")
