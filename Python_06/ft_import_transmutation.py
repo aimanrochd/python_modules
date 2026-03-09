@@ -7,7 +7,7 @@ def main() -> None:
     print('=== Import Transmutation Mastery ===')
 
     print('\nMethod 1 - Full module import:')
-    print(f'alchemy.elements.create_fire(): {create_fire()}')
+    print(f'alchemy.elements.create_fire(): {alchemy.elements.create_fire()}')
 
     print('\nMethod 2 - Specific function import:')
     print(f'create_water(): {create_water()}')

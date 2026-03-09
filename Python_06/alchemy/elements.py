@@ -1,4 +1,3 @@
-
 def create_fire():
     return 'Fire element created'
 
