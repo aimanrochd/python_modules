@@ -1,4 +1,4 @@
-from alchemy.elements import create_fire, create_earth
+from ..elements import create_fire, create_earth
 
 fire_result = create_fire()
 earth_result = create_earth()

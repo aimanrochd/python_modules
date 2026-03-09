@@ -1,5 +1,5 @@
 def record_spell(spell_name: str, ingredients: str) -> str:
-    from alchemy.grimoire.validator import validate_ingredients
+    from .validator import validate_ingredients
     validation_result = validate_ingredients(ingredients)
     if 'VALID' in validation_result:
         return f'Spell recorded: {spell_name} ({validation_result})'
