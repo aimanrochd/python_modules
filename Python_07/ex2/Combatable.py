@@ -1,15 +1,16 @@
 from abc import ABC, abstractmethod
+from typing import Dict
+
 
 class Combatable(ABC):
-    @abstractmethod
-    def attack(self, target) -> dict:
+    def attack(self, target: object) -> Dict:
         ...
+    attack = abstractmethod(attack)
 
-    @abstractmethod
-    def defend(self, incoming_damage: int) -> dict:
+    def defend(self, incoming_damage: int) -> Dict:
         ...
+    defend = abstractmethod(defend)
 
-    @abstractmethod
-    def get_combat_stats(self) -> dict:
+    def get_combat_stats(self) -> Dict:
         ...
-
+    get_combat_stats = abstractmethod(get_combat_stats)

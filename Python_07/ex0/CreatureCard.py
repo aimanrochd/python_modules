@@ -1,4 +1,5 @@
 from ex0.Card import Card
+from typing import Dict
 
 
 class CreatureCard(Card):
@@ -12,15 +13,15 @@ class CreatureCard(Card):
         self.attack = attack
         self.health = health
 
-    def play(self, game_state: dict) -> dict:
+    def play(self, game_state: Dict) -> Dict:
         return {'card_played': self.name, 'mana_used': self.cost,
                 'effect': 'Creature summoned to battlefield'}
 
-    def get_card_info(self) -> dict:
+    def get_card_info(self) -> Dict:
         return {'name': self.name, 'cost': self.cost,
-                'rarity': self.rarity, 'type': 'Creature',
+                'rarity': self.rarity.value, 'type': 'Creature',
                 'attack': self.attack, 'health': self.health}
 
-    def attack_target(self, target: object) -> dict:
+    def attack_target(self, target: object) -> Dict:
         return {'attacker': self.name, 'target': str(target),
                 'damage_dealt': self.attack, 'combat_resolved': True}

@@ -1,4 +1,5 @@
 from ex0.CreatureCard import CreatureCard
+from ex0.Card import Rarity
 
 
 def main() -> None:
@@ -6,7 +7,7 @@ def main() -> None:
 
     print('Testing Abstract Base Class Design:\n')
 
-    drargon = CreatureCard("Fire Dragon", 5, "Legendary", 7, 5)
+    drargon = CreatureCard("Fire Dragon", 5, Rarity.LEGENDARY, 7, 5)
 
     print('CreatureCard Info:')
     print(drargon.get_card_info())
