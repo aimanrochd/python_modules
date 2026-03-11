@@ -1,19 +1,21 @@
 from abc import ABC, abstractmethod
+from typing import Dict, Union, Optional
 from ex0.Card import Card
-from typing import Dict
 
 
 class CardFactory(ABC):
-    def create_creature(self, name_or_power: str | int | None
+    def create_creature(self, name_or_power: Optional[Union[str, int]]
                         = None) -> Card:
         ...
     create_creature = abstractmethod(create_creature)
 
-    def create_spell(self, name_or_power: str | int | None = None) -> Card:
+    def create_spell(self, name_or_power: Optional[Union[str, int]]
+                     = None) -> Card:
         ...
     create_spell = abstractmethod(create_spell)
 
-    def create_artifact(self, name_or_power: str | int | None = None) -> Card:
+    def create_artifact(self, name_or_power: Optional[Union[str, int]]
+                        = None) -> Card:
         ...
     create_artifact = abstractmethod(create_artifact)
 

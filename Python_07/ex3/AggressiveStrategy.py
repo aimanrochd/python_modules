@@ -17,7 +17,7 @@ class AggressiveStrategy(GameStrategy):
                 mana_used += card.cost
                 damage_dealt += card.cost
 
-        damage_dealt = mana_used + len(cards_played)
+        damage_dealt = mana_used + len(cards_played) + 1
         targets = self.prioritize_targets(['Enemy Player'])
 
         return {'cards_played': cards_played, 'mana_used': mana_used,
