@@ -4,6 +4,7 @@ from ex0.Card import Card, Rarity
 from ex0.CreatureCard import CreatureCard
 from ex1.SpellCard import SpellCard
 from ex1.ArtifactCard import ArtifactCard
+import random
 
 
 class FantasyCardFactory(CardFactory):
@@ -31,6 +32,7 @@ class FantasyCardFactory(CardFactory):
                 cards.append(self.create_spell())
             else:
                 cards.append(self.create_artifact())
+        random.shuffle(cards)
         return {'cards': cards, 'size': len(cards),
                 'theme': 'Fantasy'}
 

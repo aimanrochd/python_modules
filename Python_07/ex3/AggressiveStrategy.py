@@ -4,7 +4,7 @@ from typing import List, Dict
 
 class AggressiveStrategy(GameStrategy):
     def execute_turn(self, hand: List, battlefield: List) -> Dict:
-        sorted_hand = sorted(hand, key=lambda c: c.cost)
+        sorted_hand = sorted(hand, key=lambda card: card.cost)
         cards_played = []
         mana_used = 0
         damage_dealt = 0

@@ -2,6 +2,7 @@ from typing import Dict, List
 from ex0.Card import Card, Rarity
 from ex2.Combatable import Combatable
 from ex2.Magical import Magical
+import random
 
 
 class EliteCard(Card, Combatable, Magical):
@@ -35,8 +36,10 @@ class EliteCard(Card, Combatable, Magical):
 
     def cast_spell(self, spell_name: str, targets: List) -> Dict:
         mana_used = len(targets) + 2
+        damage = random.randint(1, self.attack_power)
         return {'caster': self.name, 'spell': spell_name,
-                'targets': targets, 'mana_used': mana_used}
+                'targets': targets, 'mana_used': mana_used,
+                'damage': damage}
 
     def channel_mana(self, amount: int) -> Dict:
         self.mana += amount

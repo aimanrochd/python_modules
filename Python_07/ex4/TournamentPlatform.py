@@ -1,5 +1,6 @@
 from typing import Dict, List
 from ex4.TournamentCard import TournamentCard
+import random
 
 
 class TournamentPlatform:
@@ -15,7 +16,9 @@ class TournamentPlatform:
         card1 = self.cards[card1_id]
         card2 = self.cards[card2_id]
 
-        if card1.attack_power >= card2.attack_power:
+        if card1.attack_power == card2.attack_power:
+            winner, loser = random.choice([(card1, card2), (card2, card1)])
+        elif card1.attack_power > card2.attack_power:
             winner = card1
             loser = card2
         else:

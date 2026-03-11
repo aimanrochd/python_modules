@@ -1,10 +1,10 @@
-from ex0.Card import Card
+from ex0.Card import Card, Rarity
 from typing import Dict
 
 
 class CreatureCard(Card):
     def __init__(self, name: str, cost: int,
-                 rarity: str, attack: int, health: int) -> None:
+                 rarity: Rarity, attack: int, health: int) -> None:
         super().__init__(name, cost, rarity)
         if not isinstance(attack, int) or attack <= 0:
             raise ValueError("attack must be a positive integer")
