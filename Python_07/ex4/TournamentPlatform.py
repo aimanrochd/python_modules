@@ -6,7 +6,7 @@ import random
 class TournamentPlatform:
     def __init__(self) -> None:
         self.cards: Dict[str, TournamentCard] = {}
-        self.matches_played: int = 0
+        self.matches_played = 0
 
     def register_card(self, card: TournamentCard) -> str:
         self.cards[card.card_id] = card

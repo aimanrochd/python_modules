@@ -8,10 +8,10 @@ def main() -> None:
 
     platform = TournamentPlatform()
 
-    dragon = TournamentCard('Fire Dragon', 5, Rarity.LEGENDARY, 7, 5,
+    dragon = TournamentCard('Fire Dragon', 5, "Legendary", 7, 5,
                             'dragon_001')
-    wizard = TournamentCard('Ice Wizard', 4, Rarity.RARE, 5, 6,
-                            'wizard_001')
+    wizard = TournamentCard('Ice Wizard', 4, "Rare", 5, 6,
+                            'wizard_001', 1150)
 
     print('Registering Tournament Cards...')
     platform.register_card(dragon)

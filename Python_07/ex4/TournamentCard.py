@@ -5,19 +5,22 @@ from ex4.Rankable import Rankable
 
 
 class TournamentCard(Card, Combatable, Rankable):
-    def __init__(self, name: str, cost: int, rarity: Rarity,
-                 attack_power: int, health: int, card_id: str) -> None:
+    def __init__(self, name: str, cost: int, rarity: str,
+                 attack_power: int, health: int, card_id: str,
+                 rating: int = 1200) -> None:
         super().__init__(name, cost, rarity)
         self.attack_power = attack_power
         self.health = health
         self.card_id = card_id
         self.wins = 0
         self.losses = 0
-        self.rating = 1200
+        self.rating = rating
 
     def play(self, game_state: Dict) -> Dict:
-        return {'card_played': self.name, 'mana_used': self.cost,
-                'effect': 'Tournament card deployed'}
+        if isinstance(game_state, dict):
+            return {'card_played': self.name, 'mana_used': self.cost,
+                    'effect': 'Tournament card deployed'}
+        raise ValueError(f'{game_state} is not a dict')
 
     def attack(self, target: object) -> Dict:
         return {'attacker': self.name, 'target': str(target),
@@ -41,7 +44,7 @@ class TournamentCard(Card, Combatable, Rankable):
 
     def update_losses(self, losses: int) -> None:
         self.losses += losses
-        self.rating -= 66
+        self.rating -= 16
 
     def get_rank_info(self) -> Dict:
         return {'rating': self.rating, 'wins': self.wins,

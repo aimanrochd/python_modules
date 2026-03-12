@@ -6,7 +6,7 @@ import random
 
 
 class EliteCard(Card, Combatable, Magical):
-    def __init__(self, name: str, cost: int, rarity: Rarity,
+    def __init__(self, name: str, cost: int, rarity: str,
                  attack_power: int, health: int,
                  defense_power: int, mana: int) -> None:
         super().__init__(name, cost, rarity)
@@ -16,10 +16,11 @@ class EliteCard(Card, Combatable, Magical):
         self.mana = mana
 
     def play(self, game_state: Dict) -> Dict:
-        return {'card_played': self.name, 'mana_used': self.cost,
-                'effect': 'Elite card deployed to battlefield'}
+        if isinstance(game_state, dict):
+            return {'card_played': self.name, 'mana_used': self.cost,
+                    'effect': 'Elite card deployed to battlefield'}
 
-    def attack(self, target: object) -> Dict:
+    def attack(self, target: Card) -> Dict:
         return {'attacker': self.name, 'target': str(target),
                 'damage': self.attack_power, 'combat_type': 'melee'}
 

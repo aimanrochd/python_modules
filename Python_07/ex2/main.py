@@ -5,7 +5,7 @@ from ex2.EliteCard import EliteCard
 def main() -> None:
     print('=== DataDeck Ability System ===\n')
 
-    warrior = EliteCard('Arcane Warrior', 6, Rarity.LEGENDARY, 5, 10, 3, 4)
+    warrior = EliteCard('Arcane Warrior', 6, "Legendary", 5, 10, 3, 4)
 
     print('EliteCard capabilities:')
     print("- Card: ['play', 'get_card_info', 'is_playable']")
@@ -19,7 +19,7 @@ def main() -> None:
     print(f'Defense result: {warrior.defend(5)}')
 
     print('\nMagic phase:')
-    print(f'Spell cast:'
+    print(f'Spell cast: '
           f'{warrior.cast_spell("Fireball", ["Enemy1", "Enemy2"])}')
     print(f'Mana channel: {warrior.channel_mana(3)}')
 

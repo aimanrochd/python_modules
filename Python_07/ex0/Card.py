@@ -11,10 +11,10 @@ class Rarity(Enum):
 
 
 class Card(ABC):
-    def __init__(self, name: str, cost: int, rarity: Rarity) -> None:
+    def __init__(self, name: str, cost: int, rarity: str) -> None:
         self.name = name
         self.cost = cost
-        self.rarity = rarity
+        self.rarity = Rarity(rarity)
 
     def play(self, game_state: Dict) -> Dict:
         ...

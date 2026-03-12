@@ -14,8 +14,10 @@ class CreatureCard(Card):
         self.health = health
 
     def play(self, game_state: Dict) -> Dict:
-        return {'card_played': self.name, 'mana_used': self.cost,
-                'effect': 'Creature summoned to battlefield'}
+        if isinstance(game_state, dict):
+            return {'card_played': self.name, 'mana_used': self.cost,
+                    'effect': 'Creature summoned to battlefield'}
+        raise ValueError(f'{game_state} is not a dict')
 
     def get_card_info(self) -> Dict:
         return {'name': self.name, 'cost': self.cost,

@@ -7,19 +7,19 @@ def main() -> None:
 
     print('Testing Abstract Base Class Design:\n')
 
-    drargon = CreatureCard("Fire Dragon", 5, Rarity.LEGENDARY, 7, 5)
+    dragon = CreatureCard("Fire Dragon", 5, "Legendary", 7, 5)
 
     print('CreatureCard Info:')
-    print(drargon.get_card_info())
+    print(dragon.get_card_info())
     print('\nPlaying Fire Dragon with 6 mana available:')
-    print(f'Playable: {drargon.is_playable(6)}')
-    print(f'Play result: {drargon.play({})}')
+    print(f'Playable: {dragon.is_playable(6)}')
+    print(f'Play result: {dragon.play({})}')
 
     print('\nFire Dragon attacks Goblin Warrior:')
-    print(f'Attack result: {drargon.attack_target("Goblin Warrior")}')
+    print(f'Attack result: {dragon.attack_target("Goblin Warrior")}')
 
     print('\nTesting insufficient mana (3 available):')
-    print(f'Playable: {drargon.is_playable(3)}')
+    print(f'Playable: {dragon.is_playable(3)}')
 
     print('\nAbstract pattern successfully demonstrated!')
 
