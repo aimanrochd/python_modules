@@ -1,5 +1,5 @@
 from typing import Dict
-from ex0.Card import Card, Rarity
+from ex0.Card import Card
 from ex2.Combatable import Combatable
 from ex4.Rankable import Rankable
 
@@ -17,10 +17,10 @@ class TournamentCard(Card, Combatable, Rankable):
         self.rating = rating
 
     def play(self, game_state: Dict) -> Dict:
-        if isinstance(game_state, dict):
-            return {'card_played': self.name, 'mana_used': self.cost,
-                    'effect': 'Tournament card deployed'}
-        raise ValueError(f'{game_state} is not a dict')
+        mana = game_state.get('mana', 0)
+        return {'card_played': self.name, 'mana_used': self.cost,
+                'effect': 'Tournament card deployed',
+                'mana_remaining': mana - self.cost}
 
     def attack(self, target: object) -> Dict:
         return {'attacker': self.name, 'target': str(target),

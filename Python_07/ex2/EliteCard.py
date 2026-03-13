@@ -1,5 +1,5 @@
 from typing import Dict, List
-from ex0.Card import Card, Rarity
+from ex0.Card import Card
 from ex2.Combatable import Combatable
 from ex2.Magical import Magical
 import random
@@ -16,9 +16,10 @@ class EliteCard(Card, Combatable, Magical):
         self.mana = mana
 
     def play(self, game_state: Dict) -> Dict:
-        if isinstance(game_state, dict):
-            return {'card_played': self.name, 'mana_used': self.cost,
-                    'effect': 'Elite card deployed to battlefield'}
+        mana = game_state.get('mana', 0)
+        return {'card_played': self.name, 'mana_used': self.cost,
+                'effect': 'Elite card deployed to battlefield',
+                'mana_remaining': mana - self.cost}
 
     def attack(self, target: Card) -> Dict:
         return {'attacker': self.name, 'target': str(target),

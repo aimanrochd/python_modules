@@ -1,10 +1,10 @@
-from ex0.Card import Card, Rarity
+from ex0.Card import Card
 from typing import Dict
 
 
 class CreatureCard(Card):
     def __init__(self, name: str, cost: int,
-                 rarity: Rarity, attack: int, health: int) -> None:
+                 rarity: str, attack: int, health: int) -> None:
         super().__init__(name, cost, rarity)
         if not isinstance(attack, int) or attack <= 0:
             raise ValueError("attack must be a positive integer")
@@ -14,10 +14,10 @@ class CreatureCard(Card):
         self.health = health
 
     def play(self, game_state: Dict) -> Dict:
-        if isinstance(game_state, dict):
-            return {'card_played': self.name, 'mana_used': self.cost,
-                    'effect': 'Creature summoned to battlefield'}
-        raise ValueError(f'{game_state} is not a dict')
+        mana = game_state.get('mana', 0)
+        return {'card_played': self.name, 'mana_used': self.cost,
+                'effect': 'Creature summoned to battlefield',
+                'mana_remaining': mana - self.cost}
 
     def get_card_info(self) -> Dict:
         return {'name': self.name, 'cost': self.cost,

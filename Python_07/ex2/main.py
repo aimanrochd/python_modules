@@ -1,11 +1,10 @@
-from ex0.Card import Rarity
 from ex2.EliteCard import EliteCard
 
 
 def main() -> None:
     print('=== DataDeck Ability System ===\n')
 
-    warrior = EliteCard('Arcane Warrior', 6, "Legendary", 5, 10, 3, 4)
+    warrior = EliteCard('Arcane Warrior', 6, 'Legendary', 5, 10, 3, 4)
 
     print('EliteCard capabilities:')
     print("- Card: ['play', 'get_card_info', 'is_playable']")
@@ -13,6 +12,8 @@ def main() -> None:
     print("- Magical: ['cast_spell', 'channel_mana', 'get_magic_stats']")
 
     print('\nPlaying Arcane Warrior (Elite Card):')
+    game_state = {'mana': 10}
+    print(f'Play result: {warrior.play(game_state)}')
 
     print('\nCombat phase:')
     print(f'Attack result: {warrior.attack("Enemy")}')

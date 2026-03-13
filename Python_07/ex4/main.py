@@ -1,4 +1,3 @@
-from ex0.Card import Rarity
 from ex4.TournamentCard import TournamentCard
 from ex4.TournamentPlatform import TournamentPlatform
 
@@ -8,9 +7,9 @@ def main() -> None:
 
     platform = TournamentPlatform()
 
-    dragon = TournamentCard('Fire Dragon', 5, "Legendary", 7, 5,
+    dragon = TournamentCard('Fire Dragon', 5, 'Legendary', 7, 5,
                             'dragon_001')
-    wizard = TournamentCard('Ice Wizard', 4, "Rare", 5, 6,
+    wizard = TournamentCard('Ice Wizard', 4, 'Rare', 5, 6,
                             'wizard_001', 1150)
 
     print('Registering Tournament Cards...')
@@ -26,6 +25,11 @@ def main() -> None:
     print('- Interfaces: [Card, Combatable, Rankable]')
     print(f'- Rating: {wizard.rating}')
     print(f'- Record: {wizard.wins}-{wizard.losses}')
+
+    print('\nTesting card play:')
+    game_state = {'mana': 10}
+    print(f'Dragon plays: {dragon.play(game_state)}')
+    print(f'Wizard plays: {wizard.play(game_state)}')
 
     print('\nCreating tournament match...')
     result = platform.create_match('dragon_001', 'wizard_001')

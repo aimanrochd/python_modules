@@ -1,5 +1,4 @@
 from ex0.CreatureCard import CreatureCard
-from ex0.Card import Rarity
 
 
 def main() -> None:
@@ -13,7 +12,8 @@ def main() -> None:
     print(dragon.get_card_info())
     print('\nPlaying Fire Dragon with 6 mana available:')
     print(f'Playable: {dragon.is_playable(6)}')
-    print(f'Play result: {dragon.play({})}')
+    game_state = {'mana': 6}
+    print(f'Play result: {dragon.play(game_state)}')
 
     print('\nFire Dragon attacks Goblin Warrior:')
     print(f'Attack result: {dragon.attack_target("Goblin Warrior")}')

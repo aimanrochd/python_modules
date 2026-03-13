@@ -17,21 +17,23 @@ def main() -> None:
     print(f'Deck stats: {deck.get_deck_stats()}')
 
     print('\nDrawing and playing cards:')
+    game_state = {'mana': 10}
     for _ in range(3):
         card = deck.draw_card()
         card_type = type(card).__name__.replace('Card', '')
         print(f'\nDrew: {card.name} ({card_type})')
-        print(f'Play result: {card.play({})}')
+        print(f'Play result: {card.play(game_state)}')
 
     print('\nTesting spell one-time use:')
     bolt = SpellCard('Lightning Bolt', 3, 'Common', 'damage')
-    print(f'First play: {bolt.play({})}')
-    print(f'Second play: {bolt.play({})}')
+    print(f'First play: {bolt.play(game_state)}')
+    print(f'Second play: {bolt.play(game_state)}')
 
+    print('\nTesting artifact durability:')
     ring = ArtifactCard('Mana Ring', 2, 'Rare', 2, '+1 mana per turn')
-    print(ring.activate_ability())
-    print(ring.activate_ability())
-    print(ring.activate_ability())
+    print(f'Activate 1: {ring.activate_ability()}')
+    print(f'Activate 2: {ring.activate_ability()}')
+    print(f'Activate 3 (destroyed): {ring.activate_ability()}')
 
     print('\nPolymorphism in action: Same interface,'
           'different card behaviors!')

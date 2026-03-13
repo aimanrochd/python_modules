@@ -1,5 +1,5 @@
 from typing import Dict, List
-from ex0.Card import Card, Rarity
+from ex0.Card import Card
 
 
 class SpellCard(Card):
@@ -13,17 +13,18 @@ class SpellCard(Card):
         if self.used:
             return {'card_played': self.name,
                     'error': 'Spell already used'}
-        if isinstance(game_state, dict):
-            self.used = True
-            effects = {
-                'damage': f'Deal {self.cost} damage to target',
-                'heal': f'Heal {self.cost} health',
-                'buff': f'Buff target by {self.cost}',
-                'debuff': f'Debuff target by {self.cost}'
-            }
-            return {'card_played': self.name, 'mana_used': self.cost,
-                    'effect': effects.get(self.effect_type,
-                                        'Spell effect applied')}
+        mana = game_state.get('mana', 0)
+        self.used = True
+        effects = {
+            'damage': f'Deal {self.cost} damage to target',
+            'heal': f'Heal {self.cost} health',
+            'buff': f'Buff target by {self.cost}',
+            'debuff': f'Debuff target by {self.cost}'
+        }
+        return {'card_played': self.name, 'mana_used': self.cost,
+                'effect': effects.get(self.effect_type,
+                                      'Spell effect applied'),
+                'mana_remaining': mana - self.cost}
 
     def resolve_effect(self, targets: List) -> Dict:
         return {'spell': self.name, 'effect_type': self.effect_type,

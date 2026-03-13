@@ -20,15 +20,17 @@ def main() -> None:
     hand = [
         factory.create_creature(),
         factory.create_creature('goblin'),
-        factory.create_spell()
+        factory.create_spell('lightning')
     ]
     hand_str = ', '.join([f'{c.name} ({c.cost})' for c in hand])
     print(f'Hand: [{hand_str}]')
 
     print('\nTurn execution:')
-    result = engine.simulate_turn()
+    result = engine.simulate_turn(hand)
+
     print(f'Strategy: {strategy.get_strategy_name()}')
-    print(f'Actions: {result}')
+    actions = {k: v for k, v in result.items() if k != 'hand_used'}
+    print(f'Actions: {actions}')
 
     print('\nGame Report:')
     print(engine.get_engine_status())

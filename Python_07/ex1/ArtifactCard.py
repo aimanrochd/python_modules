@@ -10,10 +10,10 @@ class ArtifactCard(Card):
         self.effect = effect
 
     def play(self, game_state: Dict) -> Dict:
-        if isinstance(game_state, dict):
-            return {'card_played': self.name, 'mana_used': self.cost,
-                    'effect': f'Permanent: {self.effect}'}
-        raise ValueError(f'{game_state} is not a dict')
+        mana = game_state.get('mana', 0)
+        return {'card_played': self.name, 'mana_used': self.cost,
+                'effect': f'Permanent: {self.effect}',
+                'mana_remaining': mana - self.cost}
 
     def activate_ability(self) -> Dict:
         if self.durability <= 0:
