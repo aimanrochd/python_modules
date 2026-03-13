@@ -27,7 +27,8 @@ class Deck:
 
     def get_deck_stats(self) -> Dict:
         total = len(self.cards)
-        avg_cost = sum(c.cost for c in self.cards) / total if total > 0 else 0
+        raw_avg = sum(c.cost for c in self.cards) / total if total > 0 else 0.0
+        avg_cost = float(f"{raw_avg:.1f}")
         type_counts: Dict[str, int] = {}
         for card in self.cards:
             card_type = card.card_type.lower() + 's'

@@ -10,7 +10,7 @@ def main() -> None:
     print('Building deck with different card types...')
     deck = Deck()
     deck.add_card(SpellCard('Lightning Bolt', 3, 'Common', 'damage'))
-    deck.add_card(ArtifactCard('Mana Crystal', 2, 'Rare', 5,
+    deck.add_card(ArtifactCard('Mana Crystal', 4, 'Rare', 5,
                                '+1 mana per turn'))
     deck.add_card(CreatureCard('Fire Dragon', 5, 'Legendary', 7, 5))
 
@@ -34,6 +34,7 @@ def main() -> None:
     print(f'Activate 1: {ring.activate_ability()}')
     print(f'Activate 2: {ring.activate_ability()}')
     print(f'Activate 3 (destroyed): {ring.activate_ability()}')
+    print(f'testing playing after destroy: {ring.play(game_state)}')
 
     print('\nPolymorphism in action: Same interface, '
           'different card behaviors!')
