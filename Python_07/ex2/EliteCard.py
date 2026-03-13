@@ -49,3 +49,11 @@ class EliteCard(Card, Combatable, Magical):
 
     def get_magic_stats(self) -> Dict:
         return {'name': self.name, 'mana': self.mana}
+
+    def get_capabilities(self) -> dict:
+        """Returns the available interfaces and their methods."""
+        return {
+            "Card": ["play", "get_card_info", "is_playable"],
+            "Combatable": ["attack", "defend", "get_combat_stats"],
+            "Magical": ["cast_spell", "channel_mana", "get_magic_stats"]
+        }

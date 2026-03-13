@@ -7,9 +7,9 @@ def main() -> None:
     warrior = EliteCard('Arcane Warrior', 6, 'Legendary', 5, 10, 3, 4)
 
     print('EliteCard capabilities:')
-    print("- Card: ['play', 'get_card_info', 'is_playable']")
-    print("- Combatable: ['attack', 'defend', 'get_combat_stats']")
-    print("- Magical: ['cast_spell', 'channel_mana', 'get_magic_stats']")
+    caps = warrior.get_capabilities()
+    for interface, methods in caps.items():
+        print(f"- {interface}: {methods}")
 
     print('\nPlaying Arcane Warrior (Elite Card):')
     game_state = {'mana': 10}
