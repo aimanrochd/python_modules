@@ -8,6 +8,7 @@ class SpellCard(Card):
         super().__init__(name, cost, rarity)
         self.effect_type = effect_type
         self.used = False
+        self.card_type = 'Spell'
 
     def play(self, game_state: dict) -> dict:
         if self.used:

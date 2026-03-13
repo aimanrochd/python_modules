@@ -15,6 +15,7 @@ class Card(ABC):
         self.name = name
         self.cost = cost
         self.rarity = Rarity(rarity)
+        self.card_type = 'Card'
 
     def play(self, game_state: Dict) -> Dict:
         ...

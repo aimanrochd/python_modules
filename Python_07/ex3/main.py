@@ -27,10 +27,8 @@ def main() -> None:
 
     print('\nTurn execution:')
     result = engine.simulate_turn(hand)
-
     print(f'Strategy: {strategy.get_strategy_name()}')
-    actions = {k: v for k, v in result.items() if k != 'hand_used'}
-    print(f'Actions: {actions}')
+    print(f'Actions: {result}')
 
     print('\nGame Report:')
     print(engine.get_engine_status())

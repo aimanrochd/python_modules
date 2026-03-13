@@ -35,7 +35,7 @@ def main() -> None:
     print(f'Activate 2: {ring.activate_ability()}')
     print(f'Activate 3 (destroyed): {ring.activate_ability()}')
 
-    print('\nPolymorphism in action: Same interface,'
+    print('\nPolymorphism in action: Same interface, '
           'different card behaviors!')
 
 

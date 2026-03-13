@@ -8,6 +8,7 @@ class ArtifactCard(Card):
         super().__init__(name, cost, rarity)
         self.durability = durability
         self.effect = effect
+        self.card_type = 'Artifact'
 
     def play(self, game_state: Dict) -> Dict:
         mana = game_state.get('mana', 0)

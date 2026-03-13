@@ -13,8 +13,11 @@ class TournamentPlatform:
         return card.card_id
 
     def create_match(self, card1_id: str, card2_id: str) -> Dict:
-        card1 = self.cards[card1_id]
-        card2 = self.cards[card2_id]
+        card1 = self.cards.get(card1_id)
+        card2 = self.cards.get(card2_id)
+
+        if not card1 or not card2:
+            return {'error': 'Card not found'}
 
         if card1.attack_power == card2.attack_power:
             winner, loser = random.choice([(card1, card2), (card2, card1)])

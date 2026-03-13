@@ -1,9 +1,6 @@
 from typing import Dict, List, Optional
 import random
 from ex0.Card import Card
-from ex0.CreatureCard import CreatureCard
-from ex1.SpellCard import SpellCard
-from ex1.ArtifactCard import ArtifactCard
 
 
 class Deck:
@@ -30,10 +27,11 @@ class Deck:
 
     def get_deck_stats(self) -> Dict:
         total = len(self.cards)
-        creatures = sum(1 for c in self.cards if isinstance(c, CreatureCard))
-        spells = sum(1 for c in self.cards if isinstance(c, SpellCard))
-        artifacts = sum(1 for c in self.cards if isinstance(c, ArtifactCard))
         avg_cost = sum(c.cost for c in self.cards) / total if total > 0 else 0
-        return {'total_cards': total, 'creatures': creatures,
-                'spells': spells, 'artifacts': artifacts,
-                'avg_cost': avg_cost}
+        type_counts: Dict[str, int] = {}
+        for card in self.cards:
+            card_type = card.card_type.lower() + 's'
+            type_counts[card_type] = type_counts.get(card_type, 0) + 1
+        type_counts['total_cards'] = total
+        type_counts['avg_cost'] = avg_cost
+        return type_counts

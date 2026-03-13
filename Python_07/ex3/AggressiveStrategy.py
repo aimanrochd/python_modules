@@ -20,7 +20,7 @@ class AggressiveStrategy(GameStrategy):
                 cards_played.append(card.name)
                 mana_used += card.cost
 
-        damage_dealt = mana_used + len(cards_played) + 1
+        damage_dealt = mana_used + len(cards_played)
 
         available_targets = battlefield + [TargetType.PLAYER.value]
 

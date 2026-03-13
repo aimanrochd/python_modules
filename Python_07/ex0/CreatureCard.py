@@ -12,6 +12,7 @@ class CreatureCard(Card):
             raise ValueError("health must be a positive integer")
         self.attack = attack
         self.health = health
+        self.card_type = 'Creature'
 
     def play(self, game_state: Dict) -> Dict:
         mana = game_state.get('mana', 0)

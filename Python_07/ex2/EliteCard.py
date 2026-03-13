@@ -27,7 +27,7 @@ class EliteCard(Card, Combatable, Magical):
 
     def defend(self, incoming_damage: int) -> Dict:
         damage_taken = max(0, incoming_damage - self.defense_power)
-        damage_blocked = self.defense_power
+        damage_blocked = min(self.defense_power, incoming_damage)
         still_alive = self.health > damage_taken
         return {'defender': self.name, 'damage_taken': damage_taken,
                 'damage_blocked': damage_blocked, 'still_alive': still_alive}
@@ -37,7 +37,7 @@ class EliteCard(Card, Combatable, Magical):
                 'health': self.health, 'defense_power': self.defense_power}
 
     def cast_spell(self, spell_name: str, targets: List) -> Dict:
-        mana_used = len(targets) + 2
+        mana_used = len(targets)
         damage = random.randint(1, self.attack_power)
         return {'caster': self.name, 'spell': spell_name,
                 'targets': targets, 'mana_used': mana_used,

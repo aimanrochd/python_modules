@@ -27,9 +27,10 @@ class TournamentCard(Card, Combatable, Rankable):
                 'damage': self.attack_power, 'combat_type': 'melee'}
 
     def defend(self, incoming_damage: int) -> Dict:
-        damage_taken = max(0, incoming_damage - self.health)
+        damage_taken = incoming_damage
+        still_alive = self.health > damage_taken
         return {'defender': self.name, 'damage_taken': damage_taken,
-                'still_alive': self.health > damage_taken}
+                'still_alive': still_alive}
 
     def get_combat_stats(self) -> Dict:
         return {'name': self.name, 'attack_power': self.attack_power,
