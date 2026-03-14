@@ -13,10 +13,10 @@ class ArtifactCard(Card):
     def play(self, game_state: Dict) -> Dict:
         if self.durability <= 0:
             return {'error': 'Cannot play a destroyed artifact'}
-            
+
         mana = game_state.get('mana', 0)
         return {
-            'card_played': self.name, 
+            'card_played': self.name,
             'mana_used': self.cost,
             'effect': f'Permanent: {self.effect}',
             'mana_remaining': mana - self.cost
@@ -24,11 +24,12 @@ class ArtifactCard(Card):
 
     def activate_ability(self) -> Dict:
         if self.durability <= 0:
-            return {'artifact': self.name, 'error': 'Artifact has been destroyed'}
-            
+            return {'artifact': self.name,
+                    'error': 'Artifact has been destroyed'}
+
         self.durability -= 1
         return {
-            'artifact': self.name, 
+            'artifact': self.name,
             'effect': self.effect,
             'durability_remaining': self.durability
         }

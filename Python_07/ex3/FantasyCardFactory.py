@@ -10,23 +10,15 @@ import random
 class FantasyCardFactory(CardFactory):
     def create_creature(self, name_or_power: Union[str, int, None]
                         = None) -> Card:
-        if name_or_power == 'goblin':
-            return CreatureCard('Goblin Warrior', 2, 'Common', 3, 2)
-        return CreatureCard('Fire Dragon', 5, 'Legendary', 7, 5)
+        return CreatureCard(str(name_or_power), 5, 'Legendary', 7, 5)
 
     def create_spell(self, name_or_power: Union[str, int, None]
                      = None) -> Card:
-        if name_or_power == 'lightning':
-            return SpellCard('Lightning Bolt', 3, 'Rare', 'damage')
-        return SpellCard('Fireball', 4, 'Epic', 'damage')
+        return SpellCard(str(name_or_power), 3, 'Rare', 'damage')
 
     def create_artifact(self, name_or_power: Union[str, int, None]
                         = None) -> Card:
-        if name_or_power == 'ring':
-            return ArtifactCard('Mana Ring', 2, 'Rare', 3,
-                                '+1 mana per turn')
-        return ArtifactCard('Power Sword', 3, 'Epic', 5,
-                            '+2 attack power')
+        return ArtifactCard(str(name_or_power), 2, 'Epic', 3, 'Mana Boost')
 
     def create_themed_deck(self, size: int) -> Dict:
         cards: List[Card] = []
