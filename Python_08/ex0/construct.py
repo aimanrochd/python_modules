@@ -7,7 +7,7 @@ def main() -> None:
     try:
         # If both are equal, we are in the global Python environment
         # (no venv active)
-        if sys.base_prefix == sys.prefix:
+        if os.environ.get('VIRTUAL_ENV') is None:
             print("\nMATRIX STATUS: You're still plugged in\n")
 
             # sys.executable gives the path to the current Python interpreter
@@ -31,14 +31,15 @@ def main() -> None:
 
             # VIRTUAL_ENV env variable is set automatically
             # when a venv is activated
-            path = sys.prefix
+            path = os.environ.get('VIRTUAL_ENV')
 
             # os.path.basename extracts just the folder name from the full path
             print(f'Virtual Environment: {os.path.basename(path)}')
             print(f'Environment Path: {path}')
 
             print("\nSUCCESS: You're in an isolated environment!")
-            print('Safe to install packages without affecting\nthe global system.')
+            print('Safe to install packages without affecting\nthe global '
+                  'system.')
 
             # site.getsitepackages()[0]
             # gives the main packages directory of the venv
