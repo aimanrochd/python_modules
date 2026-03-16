@@ -1,4 +1,4 @@
-# Third party imports - wrapped in try/except to handle missing dependencies
+# imports - wrapped in try/except to handle missing dependencies
 try:
     import pandas
 except ImportError:
@@ -52,7 +52,7 @@ def check_dependencies() -> bool:
 
 def analyze_data() -> None:
     print('\nAnalyzing Matrix data...')
-    print('Processing 1000 data points...')
+    print('Processing 10 data points...')
     print('Generating visualization...')
 
     # Use numpy to generate random data points
@@ -71,7 +71,6 @@ def analyze_data() -> None:
 
 
 def show_pip_poetry_diff() -> None:
-    """Show differences between pip and Poetry."""
     print('\n--- pip vs Poetry ---')
     print('pip:')
     print('  - Install: pip install -r requirements.txt')

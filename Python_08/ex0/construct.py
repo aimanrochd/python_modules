@@ -7,7 +7,7 @@ def main() -> None:
     try:
         # If both are equal, we are in the global Python environment
         # (no venv active)
-        if os.environ.get('VIRTUAL_ENV') is None:
+        if sys.prefix == sys.base_prefix:
             print("\nMATRIX STATUS: You're still plugged in\n")
 
             # sys.executable gives the path to the current Python interpreter
