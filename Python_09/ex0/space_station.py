@@ -1,15 +1,14 @@
 from datetime import datetime
 from typing import Optional
-
 from pydantic import BaseModel, Field, ValidationError
 
 
 class SpaceStation(BaseModel):
-    station_id: str = Field(..., min_length=3, max_length=10)
-    name: str = Field(..., min_length=1, max_length=50)
-    crew_size: int = Field(..., ge=1, le=20)
-    power_level: float = Field(..., ge=0.0, le=100.0)
-    oxygen_level: float = Field(..., ge=0.0, le=100.0)
+    station_id: str = Field(min_length=3, max_length=10)
+    name: str = Field(min_length=1, max_length=50)
+    crew_size: int = Field(ge=1, le=20)
+    power_level: float = Field(ge=0.0, le=100.0)
+    oxygen_level: float = Field(ge=0.0, le=100.0)
     last_maintenance: datetime
     is_operational: bool = Field(default=True)
     notes: Optional[str] = Field(default=None, max_length=200)
@@ -36,8 +35,10 @@ def main() -> None:
     print(f"Crew: {valid_station.crew_size} people")
     print(f"Power: {valid_station.power_level}%")
     print(f"Oxygen: {valid_station.oxygen_level}%")
-    print(f"Status: {'Operational' if valid_station.is_operational else 'Offline'}")
-
+    if valid_station.is_operational:
+        print('Status: Operational')
+    else:
+        print('Status: Offline')
     print("=" * 40)
 
     try:
