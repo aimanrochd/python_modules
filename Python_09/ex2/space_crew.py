@@ -21,6 +21,7 @@ class CrewMember(BaseModel):
     is_active: bool = Field(default=True)
 
 
+
 class SpaceMission(BaseModel):
     mission_id: str = Field(min_length=5, max_length=15)
     mission_name: str = Field(min_length=3, max_length=100)
