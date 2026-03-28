@@ -1,7 +1,7 @@
-from typing import Callable, Any
+from typing import callable, Any
 
 
-def mage_counter() -> Callable:
+def mage_counter() -> callable:
     # This variable is trapped inside the outer function's scope
     count = 0
 
@@ -14,7 +14,7 @@ def mage_counter() -> Callable:
     return counter
 
 
-def spell_accumulator(initial_power: int) -> Callable:
+def spell_accumulator(initial_power: int) -> callable:
     total_power = initial_power
 
     def accumulator(power_to_add: int) -> int:
@@ -25,7 +25,7 @@ def spell_accumulator(initial_power: int) -> Callable:
     return accumulator
 
 
-def enchantment_factory(enchantment_type: str) -> Callable:
+def enchantment_factory(enchantment_type: str) -> callable:
     def enchanter(item_name: str) -> str:
         # It remembers 'enchantment_type' from the outer scope
         return f"{enchantment_type} {item_name}"
@@ -35,7 +35,7 @@ def enchantment_factory(enchantment_type: str) -> Callable:
     return enchanter
 
 
-def memory_vault() -> dict[str, Callable]:
+def memory_vault() -> dict[str, callable]:
     # This dictionary acts as our private, hidden memory storage
     vault_storage: dict[str, Any] = {}
 
@@ -52,7 +52,6 @@ def memory_vault() -> dict[str, Callable]:
 
 
 if __name__ == '__main__':
-    # --- Sample outputs matching the subject requirements ---
 
     print("Testing mage counter...")
     counter = mage_counter()
