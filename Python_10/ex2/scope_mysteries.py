@@ -1,12 +1,10 @@
-from typing import callable, Any
+from typing import Any
 
 
 def mage_counter() -> callable:
-    # This variable is trapped inside the outer function's scope
     count = 0
 
     def counter() -> int:
-        # nonlocal tells Python to use and modify the 'count' from mage_counter
         nonlocal count
         count += 1
         return count
@@ -27,11 +25,8 @@ def spell_accumulator(initial_power: int) -> callable:
 
 def enchantment_factory(enchantment_type: str) -> callable:
     def enchanter(item_name: str) -> str:
-        # It remembers 'enchantment_type' from the outer scope
         return f"{enchantment_type} {item_name}"
 
-    # Make sure this return is OUTSIDE the enchanter function,
-    # aligned with the 'def enchanter' line!
     return enchanter
 
 

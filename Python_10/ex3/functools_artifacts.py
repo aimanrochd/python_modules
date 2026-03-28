@@ -1,13 +1,12 @@
 import functools
 import operator
-from typing import Callable, Any
+from typing import Any
 
 
 def spell_reducer(spells: list[int], operation: str) -> int:
     if not spells:
         return 0
 
-    # Map the operation strings to actual Python functions
     ops = {
         "add": operator.add,
         "multiply": operator.mul,
@@ -15,17 +14,11 @@ def spell_reducer(spells: list[int], operation: str) -> int:
         "min": min
     }
 
-    # Default to 'add' if an unknown operation is passed
     op_func = ops.get(operation, operator.add)
-
-    # functools.reduce applies the function cumulatively to the items
     return functools.reduce(op_func, spells)
 
 
-def partial_enchanter(base_enchantment: Callable) -> dict[str, Callable]:
-    # functools.partial "pre-fills" arguments of a function.
-    # The base_enchantment expects (power, element, target).
-    # We pre-fill power=50 and the respective element for each.
+def partial_enchanter(base_enchantment: callable) -> dict[str, callable]:
     return {
         'fire_enchant': functools.partial(base_enchantment, 50, 'Fire'),
         'ice_enchant': functools.partial(base_enchantment, 50, 'Ice'),
@@ -46,7 +39,7 @@ def memoized_fibonacci(n: int) -> int:
     return memoized_fibonacci(n - 1) + memoized_fibonacci(n - 2)
 
 
-def spell_dispatcher() -> Callable:
+def spell_dispatcher() -> callable:
     # singledispatch creates a function that changes
     # behavior based on argument type
     @functools.singledispatch
@@ -69,13 +62,13 @@ def spell_dispatcher() -> Callable:
 
 
 if __name__ == '__main__':
-    # -- Sample outputs to test during defense ---
 
     print("Testing spell_reducer...")
     powers = [10, 20, 30, 40]
-    print(f"Sum: {spell_reducer(powers, 'add')}")
-    print(f"Product: {spell_reducer(powers, 'multiply')}")
+    print(f"add: {spell_reducer(powers, 'add')}")
+    print(f"multiply: {spell_reducer(powers, 'multiply')}")
     print(f"Max: {spell_reducer(powers, 'max')}")
+    print(f"Min: {spell_reducer(powers, 'min')}")
 
     print("\nTesting partial_enchanter...")
 
