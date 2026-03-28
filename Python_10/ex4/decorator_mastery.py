@@ -1,20 +1,18 @@
 import time
 import functools
-from typing import Callable, Any
+from typing import Any
 
 
-def spell_timer(func: Callable) -> Callable:
+def spell_timer(func: callable) -> callable:
     # @functools.wraps preserves the original function's name and metadata
     @functools.wraps(func)
     def wrapper(*args: Any, **kwargs: Any) -> Any:
         print(f"Casting {func.__name__}...")
         start_time = time.time()
 
-        # Execute the actual function
         result = func(*args, **kwargs)
 
         end_time = time.time()
-        # Calculate time and format to 3 decimal places
         elapsed = end_time - start_time
         print(f"Spell completed in {elapsed:.3f} seconds")
 
@@ -22,10 +20,10 @@ def spell_timer(func: Callable) -> Callable:
     return wrapper
 
 
-def power_validator(min_power: int) -> Callable:
+def power_validator(min_power: int) -> callable:
     # Because this decorator takes an argument (min_power), we need three
     # levels of functions
-    def decorator(func: Callable) -> Callable:
+    def decorator(func: callable) -> callable:
         @functools.wraps(func)
         def wrapper(*args: Any, **kwargs: Any) -> Any:
             power = None
@@ -52,19 +50,17 @@ def power_validator(min_power: int) -> Callable:
     return decorator
 
 
-def retry_spell(max_attempts: int) -> Callable:
-    def decorator(func: Callable) -> Callable:
+def retry_spell(max_attempts: int) -> callable:
+    def decorator(func: callable) -> callable:
         @functools.wraps(func)
         def wrapper(*args: Any, **kwargs: Any) -> Any:
             for attempt in range(1, max_attempts + 1):
                 try:
-                    # If it succeeds, return the result immediately
                     return func(*args, **kwargs)
                 except Exception:
                     print(f"Spell failed, retrying... (attempt {attempt}"
                           f"/{max_attempts})")
 
-            # If the loop finishes and all attempts failed
             return f"Spell casting failed after {max_attempts} attempts"
         return wrapper
     return decorator
@@ -73,8 +69,6 @@ def retry_spell(max_attempts: int) -> Callable:
 class MageGuild:
     @staticmethod
     def validate_mage_name(name: str) -> bool:
-        # Check if the name is at least 3 characters and only contains
-        # letters/spaces
         if len(name) < 3:
             return False
         return all(char.isalpha() or char.isspace() for char in name)
@@ -86,13 +80,12 @@ class MageGuild:
 
 
 if __name__ == '__main__':
-    # --- Sample outputs matching the subject's expected output ---
 
     print("Testing spell timer...")
 
     @spell_timer
     def fireball() -> str:
-        time.sleep(0.101)  # Simulate the spell taking some time to cast
+        time.sleep(0.101)
         return "Fireball cast!"
 
     print(f"Result: {fireball()}")
@@ -101,12 +94,11 @@ if __name__ == '__main__':
     guild = MageGuild()
 
     # Testing static method
-    print(MageGuild.validate_mage_name("Gandalf the White"))  # Expected: True
-    print(MageGuild.validate_mage_name("A1"))                 # Expected: False
+    print(MageGuild.validate_mage_name("Gandalf the White"))
+    print(MageGuild.validate_mage_name("A1"))
 
-    # Testing instance method with power validator decorator
-    print(guild.cast_spell("Lightning", 15))  # Expected: Success
-    print(guild.cast_spell("Spark", 5))       # Expected: Insufficient power
+    print(guild.cast_spell("Lightning", 15))
+    print(guild.cast_spell("Spark", 5))
 
     print("\nTesting retry_spell...")
     fail_count = 0
