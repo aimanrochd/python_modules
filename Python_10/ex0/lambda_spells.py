@@ -1,16 +1,26 @@
 def artifact_sorter(artifacts: list[dict]) -> list[dict]:
+    if not isinstance(artifacts, list):
+        raise TypeError("artifacts must be a list of dicts")
     return sorted(artifacts, key=lambda x: x.get('power', 0), reverse=True)
 
 
 def power_filter(mages: list[dict], min_power: int) -> list[dict]:
+    if not isinstance(mages, list):
+        raise TypeError("mages must be a list of dicts")
+    if not isinstance(min_power, int):
+        raise TypeError("min_power must be an integer")
     return list(filter(lambda x: x.get('power', 0) >= min_power, mages))
 
 
 def spell_transformer(spells: list[str]) -> list[str]:
+    if not isinstance(spells, list):
+        raise TypeError("spells must be a list of strings")
     return list(map(lambda x: f"* {x} *", spells))
 
 
 def mage_stats(mages: list[dict]) -> dict:
+    if not isinstance(mages, list):
+        raise TypeError("mages must be a list of dicts")
     if not mages:
         return {'max_power': 0, 'min_power': 0, 'avg_power': 0.0}
 
@@ -27,7 +37,7 @@ def mage_stats(mages: list[dict]) -> dict:
     }
 
 
-if __name__ == '__main__':
+def main() -> None:
     sample_artifacts = [
         {'name': 'Crystal Orb', 'power': 85, 'type': 'Orb'},
         {'name': 'Fire Staff', 'power': 92, 'type': 'Staff'}
@@ -57,3 +67,10 @@ if __name__ == '__main__':
 
     print("\nTesting mage stats...")
     print(mage_stats(sample_mages))
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except Exception as e:
+        print(f'Error: {e}')

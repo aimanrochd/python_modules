@@ -1,9 +1,13 @@
 import functools
 import operator
-from typing import Any
+from typing import Callable, Any, Dict, List
 
 
-def spell_reducer(spells: list[int], operation: str) -> int:
+def spell_reducer(spells: List[int], operation: str) -> int:
+    if not isinstance(spells, list):
+        raise TypeError("spells must be a list of integers")
+    if not isinstance(operation, str):
+        raise TypeError("operation must be a string")
     if not spells:
         return 0
 
@@ -18,7 +22,10 @@ def spell_reducer(spells: list[int], operation: str) -> int:
     return functools.reduce(op_func, spells)
 
 
-def partial_enchanter(base_enchantment: callable) -> dict[str, callable]:
+def partial_enchanter(base_enchantment: Callable) -> Dict[str, Callable]:
+    if not callable(base_enchantment):
+        raise TypeError("base_enchantment must be a callable function")
+
     return {
         'fire_enchant': functools.partial(base_enchantment, 50, 'Fire'),
         'ice_enchant': functools.partial(base_enchantment, 50, 'Ice'),
@@ -27,21 +34,18 @@ def partial_enchanter(base_enchantment: callable) -> dict[str, callable]:
     }
 
 
-# The lru_cache decorator automatically caches the results of function calls
 @functools.lru_cache(maxsize=None)
 def memoized_fibonacci(n: int) -> int:
+    if not isinstance(n, int):
+        raise TypeError("n must be an integer")
     if n <= 0:
         return 0
-    elif n == 1:
+    if n == 1:
         return 1
-    # Without caching, this recursive call would be incredibly
-    # slow for high numbers
     return memoized_fibonacci(n - 1) + memoized_fibonacci(n - 2)
 
 
-def spell_dispatcher() -> callable:
-    # singledispatch creates a function that changes
-    # behavior based on argument type
+def spell_dispatcher() -> Callable:
     @functools.singledispatch
     def cast_spell(arg: Any) -> str:
         return "Unknown spell type"
@@ -61,8 +65,7 @@ def spell_dispatcher() -> callable:
     return cast_spell
 
 
-if __name__ == '__main__':
-
+def main() -> None:
     print("Testing spell_reducer...")
     powers = [10, 20, 30, 40]
     print(f"add: {spell_reducer(powers, 'add')}")
@@ -88,3 +91,10 @@ if __name__ == '__main__':
     print(dispatcher(100))
     print(dispatcher("Invisibility"))
     print(dispatcher(["Fireball", "Heal", "Shield"]))
+
+
+if __name__ == '__main__':
+    try:
+        main()
+    except Exception as e:
+        print(f"Error: {e}")
